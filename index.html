@@ -4,600 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PRISMA IA - Mude o seu futuro</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-      body {
-        margin: 0;
-        font-family: "Roboto", sans-serif;
-        background: linear-gradient(135deg, #f3f4f6 60%, #e0f7ef 100%);
-        color: #1f2937;
-        display: flex;
-        height: 100vh;
-        overflow: hidden;
-      }
-      aside {
-        width: 80px;
-        background: white;
-        box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 16px 0;
-      }
-      aside > div {
-        font-size: 32px;
-        margin: 20px 0;
-        cursor: pointer;
-        user-select: none;
-        transition: color 0.3s;
-      }
-      aside > div:hover,
-      aside > div.active {
-        color: #2563eb;
-      }
-      main {
-        margin-left: 60px;
-        padding: 32px 0 32px 32px;
-        flex: 1;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      #paginaInicio {
-        width: 100%;
-        display: block;
-        /* Centraliza o conteúdo e limita largura */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .user-meta,
-      .search-container,
-      .empresa-tags {
-        max-width: 900px;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      /* Espaçamento entre os elementos acima dos blocos principais */
-      .user-meta {
-        margin-bottom: 24px;
-      }
-      .search-container {
-        margin-bottom: 28px;
-      }
-      .empresa-tags {
-        margin-bottom: 28px;
-        justify-content: center;
-        width: 100%;
-        max-width: 100%;
-      }
-
-      /* Blocos principais (sections) alinhados e espaçados */
-      .vagas-container,
-      .metas-container,
-      .favoritos-container {
-        max-width: 900px;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
-      }
-
-      .vagas-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        margin-bottom: 32px;
-      }
-
-      .metas-container {
-        gap: 24px;
-        margin-bottom: 32px;
-        margin-left: auto;
-        margin-right: auto;
-        box-sizing: border-box;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 6px 18px rgb(34 197 94 / 0.09),
-          0 1.5px 4px rgb(0 0 0 / 0.07);
-        border: 1px solid #e5e7eb;
-      }
-
-      .favoritos-container {
-        background-color: white;
-        border-radius: 10px;
-        padding: 28px 32px;
-        box-shadow: 0 3px 6px rgb(0 0 0 / 0.1);
-        min-height: 140px;
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        margin-bottom: 0; /* Último bloco não precisa de margin-bottom */
-      }
-
-      /* Responsividade */
-      @media (max-width: 900px) {
-        .vagas-container {
-          grid-template-columns: 1fr 1fr;
-        }
-        .user-meta,
-        .search-container,
-        .empresa-tags,
-        .vagas-container,
-        .metas-container,
-        .favoritos-container {
-          max-width: 99vw;
-        }
-      }
-      @media (max-width: 650px) {
-        main {
-          padding: 16px 0 70px 0;
-        }
-        #paginaInicio {
-          padding: 0 4px;
-        }
-        .vagas-container {
-          grid-template-columns: 1fr !important;
-          gap: 16px;
-        }
-        .metas-container,
-        .favoritos-container {
-          padding: 16px 8px;
-        }
-      }
-      /* Cabeçalho */
-      .user-meta {
-        font-weight: 600;
-        font-size: 1rem;
-        color: #111827;
-        max-width: 100%;
-      }
-      .user-meta .meta-highlight {
-        background: #2563eb;
-        color: white;
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-weight: 700;
-        margin-left: 12px;
-        white-space: nowrap;
-      }
-      /* Busca com áudio */
-      .search-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 12px;
-        max-width: 100%;
-      }
-      .search-container input[type="text"] {
-        flex: 1;
-        padding: 14px 18px;
-        border-radius: 12px;
-        border: 1px solid #d1d5db;
-        font-size: 1rem;
-      }
-      .icon-button {
-        background: white;
-        border: 1px solid #d1d5db;
-        border-radius: 50%;
-        width: 48px;
-        height: 48px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        font-size: 24px;
-        color: #2563eb;
-        transition: background 0.2s, transform 0.15s;
-        user-select: none;
-      }
-      .icon-button:active {
-        transform: scale(0.96);
-      }
-      .icon-button:hover {
-        background: #e0e7ff;
-      }
-      /* Empresas tags */
-      .empresa-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-        padding: 16px 0;
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 2px 12px rgb(0 0 0 / 0.1);
-        max-width: 100%;
-      }
-      .empresa-tag {
-        background: #bfdbfe;
-        color: #1e40af;
-        padding: 8px 18px;
-        border-radius: 9999px;
-        font-size: 0.95rem;
-        user-select: none;
-        cursor: pointer;
-        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-        box-shadow: 0 1px 3px rgb(34 197 94 / 0.07);
-      }
-      .empresa-tag:hover,
-      .empresa-tag:focus {
-        background: #93c5fd;
-        box-shadow: 0 2px 8px rgb(34 197 94 / 0.15);
-      }
-      /* Vagas cards */
-      .vagas-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 24px;
-        max-width: 100%;
-      }
-      @media (min-width: 640px) {
-        .vagas-container {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      .vaga-card {
-        background: white;
-        border-radius: 20px;
-        padding: 20px 24px;
-        box-shadow: 0 3px 16px rgb(0 0 0 / 0.12);
-        cursor: default;
-        transition: box-shadow 0.2s, transform 0.2s;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        border: 1px solid #e5e7eb;
-      }
-      .vaga-card:hover,
-      .vaga-card:focus {
-        box-shadow: 0 6px 18px rgb(34 197 94 / 0.13),
-          0 1.5px 4px rgb(0 0 0 / 0.07);
-        transform: translateY(-4px) scale(1.025);
-        border-color: #22c55e;
-        background: #f0fdf4;
-      }
-      .vaga-empresa {
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #2563eb;
-      }
-      .vaga-titulo {
-        font-weight: 800;
-        font-size: 1.3rem;
-      }
-      .vaga-curso {
-        font-size: 0.9rem;
-        color: #6b7280;
-        font-style: italic;
-      }
-      .chances {
-        margin-top: auto;
-        font-weight: 700;
-        color: #059669; /* verde */
-        font-size: 1.1rem;
-      }
-      /* Metas e cursos ampliados */
-      .metas-container,
-      .favoritos-container {
-        background: white;
-        border-radius: 20px;
-        padding: 32px;
-        box-shadow: 0 6px 18px rgb(34 197 94 / 0.09),
-          0 1.5px 4px rgb(0 0 0 / 0.07);
-        max-width: 100%;
-        width: 100%;
-        max-width: 850px;
-        margin: 0 0 32;
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-        border: 1px solid #e5e7eb;
-      }
-      .metas-titulo,
-      .favoritos-titulo {
-        font-weight: 800;
-        font-size: 1.6rem;
-        margin-bottom: 20px;
-        color: #111827;
-        font-size: 1.35rem;
-        color: #065f46;
-        letter-spacing: 0.5px;
-        text-shadow: 0 1px 0 #d1fae5;
-      }
-      .meta-item {
-        font-size: 1.1rem;
-        color: #374151;
-        padding-left: 4px;
-        border-left: 4px solid #2563eb;
-      }
-      .meta-destaque {
-        font-weight: 700;
-        color: #2563eb;
-        margin-left: 6px;
-      }
-      .favorito-item {
-        padding: 14px 20px;
-        background: #eff6ff;
-        border-radius: 16px;
-        font-size: 1.1rem;
-        cursor: default;
-        transition: background-color 0.3s;
-      }
-      .favorito-item:hover {
-        background: #dbeafe;
-      }
-      /* Chat maior e fixo no canto inferior direito */
-      .chat-container {
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        width: 420px;
-        height: 540px;
-        background: white;
-        box-shadow: 0 12px 40px rgb(0 0 0 / 0.22);
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        font-size: 0.9rem;
-        z-index: 1000;
-      }
-      .chat-header {
-        background: #2563eb;
-        color: white;
-        padding: 16px 24px;
-        font-weight: 800;
-        font-size: 1.15rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .chat-close-btn {
-        cursor: pointer;
-        font-size: 26px;
-        user-select: none;
-        font-weight: 700;
-        color: white;
-        background: transparent;
-        border: none;
-        padding: 0;
-        line-height: 1;
-      }
-      .chat-messages {
-        flex: 1;
-        padding: 18px 24px;
-        overflow-y: auto;
-        background: #e0e7ff;
-        display: flex;
-        flex-direction: column;
-        gap: 12px; /* mais espaçamento entre mensagens */
-      }
-      .chat-input-area {
-        display: flex;
-        align-items: center;
-        padding: 14px 20px;
-        border-top: 1px solid #d1d5db;
-        gap: 12px;
-        background: white;
-      }
-      .chat-input-area input[type="text"] {
-        flex: 1;
-        padding: 12px 16px;
-        border-radius: 16px;
-        border: 1px solid #d1d5db;
-        font-size: 1rem;
-      }
-      .chat-input-area button {
-        background: #2563eb;
-        border: none;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        user-select: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s;
-      }
-      .chat-input-area button:hover {
-        background: #1d4ed8;
-      }
-      /* Scroll */
-      ::-webkit-scrollbar {
-        width: 10px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f3f4f6;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #a5b4fc;
-        border-radius: 24px;
-      }
-      /* Modal lista vagas (lupa) */
-      .modal-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.45);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 2000;
-      }
-      .modal-bg.active {
-        display: flex;
-      }
-      .modal-content {
-        background: white;
-        border-radius: 20px;
-        max-height: 80vh;
-        overflow-y: auto;
-        width: 92%;
-        max-width: 720px;
-        padding: 32px 28px;
-        box-shadow: 0 12px 40px rgb(0 0 0 / 0.25);
-      }
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 22px;
-      }
-      .modal-header h3 {
-        margin: 0;
-        font-weight: 800;
-        color: #2563eb;
-        font-size: 1.7rem;
-      }
-      .modal-close {
-        cursor: pointer;
-        font-size: 32px;
-        user-select: none;
-        font-weight: 700;
-        color: #2563eb;
-        background: transparent;
-        border: none;
-        padding: 0;
-        line-height: 1;
-      }
-      .vaga-lista-item {
-        border-bottom: 1px solid #e5e7eb;
-        padding: 16px 0;
-      }
-      .vaga-lista-item:last-child {
-        border-bottom: none;
-      }
-      .vaga-lista-empresa {
-        font-weight: 700;
-        font-size: 1.3rem;
-        color: #2563eb;
-      }
-      .vaga-lista-titulo {
-        font-weight: 700;
-        font-size: 1.1rem;
-      }
-      .vaga-lista-curso {
-        font-style: italic;
-        color: #6b7280;
-        margin-bottom: 8px;
-      }
-      .vaga-lista-chances {
-        font-weight: 700;
-        color: #059669;
-      }
-      /* Formulários pré-preenchidos */
-      form label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 700;
-        font-size: 1rem;
-      }
-      form input,
-      form select {
-        width: 100%;
-        padding: 14px 16px;
-        margin-bottom: 24px;
-        border-radius: 16px;
-        border: 1px solid #d1d5db;
-        font-size: 1rem;
-        box-sizing: border-box;
-      }
-      form button {
-        background: #2563eb;
-        color: white;
-        border: none;
-        padding: 16px 24px;
-        border-radius: 16px;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 1.1rem;
-        transition: background-color 0.3s;
-        user-select: none;
-      }
-      form button:hover {
-        background: #1d4ed8;
-      }
-      /* Ajustar altura form perfil sem scroll */
-      #paginaPerfil form {
-        max-height: 480px;
-        overflow-y: hidden;
-      }
-      /* Botão voltar estilo igual chat */
-      .btn-voltar {
-        position: fixed;
-        top: 16px;
-        left: 96px; /* depois da sidebar */
-        background: #2563eb;
-        border: none;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        color: white;
-        font-size: 26px;
-        cursor: pointer;
-        user-select: none;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s;
-        z-index: 1500;
-      }
-      .btn-voltar:hover {
-        background: #1d4ed8;
-      }
-      /* Mostrar botão voltar só nas telas de formulário */
-      main.form-active + .btn-voltar {
-        display: flex;
-      }
-      /* Botão para abrir o chat IA */
-      .btn-chat-reabrir {
-        position: fixed;
-        bottom: 16px;
-        right: 16px;
-        background: #2563eb;
-        border: none;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        color: white;
-        font-size: 26px;
-        cursor: pointer;
-        user-select: none;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        transition: background-color 0.3s;
-        z-index: 1500;
-        animation: chatBtnFadeIn 0.4s;
-      }
-      .btn-chat-reabrir:hover {
-        background: #1d4ed8;
-      }
-      @keyframes chatBtnFadeIn {
-        from {
-          opacity: 0;
-          transform: scale(0.7);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <aside aria-label="Menu lateral">
-      <!-- removi lupa grande -->
       <div
         id="btnInicio"
         title="Início"
@@ -605,8 +15,45 @@
         tabindex="0"
         role="button"
         aria-pressed="true"
+        style="
+          margin: 0 auto 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#e5e7eb'"
+        onmouseout="this.style.background='none'"
       >
-        🏠
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+          "
+          aria-label="Início"
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 11.5L12 4L21 11.5V20A1 1 0 0 1 20 21H16A1 1 0 0 1 15 20V16A1 1 0 0 0 14 15H10A1 1 0 0 0 9 16V20A1 1 0 0 1 8 21H4A1 1 0 0 1 3 20V11.5Z"
+              fill="#111827"
+            />
+          </svg>
+        </span>
       </div>
       <div
         id="btnEstudo"
@@ -614,8 +61,47 @@
         tabindex="0"
         role="button"
         aria-pressed="false"
+        style="
+          margin: 0 auto 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#e5e7eb'"
+        onmouseout="this.style.background='none'"
       >
-        🎓
+        <!-- Chapéu de formatura simples com parte redonda (tassel e topo) -->
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <!-- Topo do chapéu (losango) -->
+          <polygon points="16,8 28,13 16,18 4,13" fill="#111827" />
+          <!-- Parte redonda (base do chapéu) -->
+          <ellipse cx="16" cy="18" rx="6" ry="2.2" fill="#111827" />
+          <!-- Tassel (cordão) -->
+          <line
+            x1="16"
+            y1="8"
+            x2="16"
+            y2="22"
+            stroke="#111827"
+            stroke-width="1.5"
+          />
+          <!-- Bolinha do tassel -->
+          <circle cx="16" cy="22.7" r="1.1" fill="#111827" />
+        </svg>
       </div>
       <div
         id="btnPerfil"
@@ -623,9 +109,233 @@
         tabindex="0"
         role="button"
         aria-pressed="false"
+        style="
+          margin: 0 auto 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#e5e7eb'"
+        onmouseout="this.style.background='none'"
       >
-        🧍
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="12" cy="8" r="4" fill="#111827" />
+          <path
+            d="M4 20c0-3.3137 3.134-6 7-6s7 2.6863 7 6"
+            stroke="#111827"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
+        </svg>
       </div>
+      <div style="flex: 1"></div>
+      <div
+        id="btnEmpresaSite"
+        title="Site da Empresa"
+        tabindex="0"
+        role="button"
+        aria-pressed="false"
+        style="
+          margin: 0 auto 16px auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #22c55e;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#111827';this.querySelectorAll('rect')[0].setAttribute('fill','#fff');this.querySelectorAll('rect')[0].setAttribute('stroke','#fff');this.querySelectorAll('rect')[6].setAttribute('fill','#fff');this.querySelectorAll('rect')[6].setAttribute('stroke','#fff');this.querySelectorAll('rect').forEach((r,i)=>{if(i>0&&i<7)r.setAttribute('fill','#fff');});"
+        onmouseout="this.style.background='#22c55e';this.querySelectorAll('rect')[0].setAttribute('fill','#fff');this.querySelectorAll('rect')[0].setAttribute('stroke','#111827');this.querySelectorAll('rect')[6].setAttribute('fill','#fff');this.querySelectorAll('rect')[6].setAttribute('stroke','#111827');this.querySelectorAll('rect').forEach((r,i)=>{if(i>0&&i<7)r.setAttribute('fill','#111827');});"
+        onclick="window.location.href='empresa.html'"
+      >
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+          "
+          aria-label="Site da Empresa"
+        >
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="3"
+              y="7"
+              width="18"
+              height="13"
+              rx="2"
+              fill="#fff"
+              stroke="#111827"
+              stroke-width="2"
+            />
+            <rect x="7" y="11" width="2" height="2" fill="#111827" />
+            <rect x="11" y="11" width="2" height="2" fill="#111827" />
+            <rect x="15" y="11" width="2" height="2" fill="#111827" />
+            <rect x="7" y="15" width="2" height="2" fill="#111827" />
+            <rect x="11" y="15" width="2" height="2" fill="#111827" />
+            <rect x="15" y="15" width="2" height="2" fill="#111827" />
+            <rect
+              x="9"
+              y="3"
+              width="6"
+              height="4"
+              rx="1"
+              fill="#fff"
+              stroke="#111827"
+              stroke-width="2"
+            />
+          </svg>
+        </span>
+      </div>
+      <div class="logo-lateral">
+        <img
+          src="prisma-ai/capturar-removebg-preview.png"
+          alt="Logo Prisma"
+          style="
+            width: 48px;
+            height: 80px;
+            margin-bottom: 12px;
+            opacity: 0.92;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.7, 0.2, 0.3, 1.1);
+          "
+          id="logoPrisma"
+        />
+      </div>
+      <!-- Modal para exibir a logo expandida -->
+      <div
+        id="logoModal"
+        style="
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          justify-content: center;
+          align-items: center;
+          background: transparent;
+          pointer-events: auto;
+        "
+      >
+        <div
+          id="logo3dWrapper"
+          style="
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            perspective: 1200px;
+            width: 60vw;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+          "
+        >
+          <img
+            src="prisma-ai/capturar-removebg-preview.png"
+            alt="Logo Prisma Expandida"
+            id="logoExpandida"
+            style="
+              max-width: 100%;
+              max-height: 100%;
+              opacity: 0.98;
+              display: block;
+              pointer-events: none;
+              filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18))
+                drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff);
+              /* O drop-shadow cria a ilusão de profundidade apenas nas partes visíveis */
+              will-change: transform, filter;
+              transition: transform 0.18s cubic-bezier(0.7, 0.2, 0.3, 1.1),
+                filter 0.18s;
+              background: none;
+              border-radius: 0;
+            "
+          />
+        </div>
+      </div>
+      <script>
+        // Modal da logo expandida
+        const logoPrisma = document.getElementById("logoPrisma");
+        const logoModal = document.getElementById("logoModal");
+        const logoExpandida = document.getElementById("logoExpandida");
+        const logo3dWrapper = document.getElementById("logo3dWrapper");
+        logoPrisma.onclick = function () {
+          logoModal.style.display = "flex";
+        };
+        logoModal.onclick = function (e) {
+          if (e.target === logoModal) logoModal.style.display = "none";
+        };
+
+        // Faz a imagem seguir completamente o mouse na tela do modal
+        logoModal.addEventListener("mousemove", function (e) {
+          const modalRect = logoModal.getBoundingClientRect();
+          const x = e.clientX - modalRect.left;
+          const y = e.clientY - modalRect.top;
+          // Centraliza a imagem no ponteiro
+          logo3dWrapper.style.left = x + "px";
+          logo3dWrapper.style.top = y + "px";
+          // O efeito de rotação será aplicado abaixo
+          apply3DRotation(x, y, modalRect.width, modalRect.height);
+        });
+        logoModal.addEventListener("mouseleave", function () {
+          // Volta para o centro da tela e reseta rotação
+          logo3dWrapper.style.left = "50%";
+          logo3dWrapper.style.top = "50%";
+          logoExpandida.style.transform = "none";
+          logoExpandida.style.filter =
+            "drop-shadow(0 8px 24px rgba(0,0,0,0.18)) drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff)";
+        });
+
+        // Função para aplicar rotação 3D e profundidade conforme o mouse
+        function apply3DRotation(mouseX, mouseY, areaWidth, areaHeight) {
+          const centerX = areaWidth / 2;
+          const centerY = areaHeight / 2;
+          const maxTilt = 120;
+          const rotateY = ((mouseX - centerX) / centerX) * maxTilt;
+          const rotateX = -((mouseY - centerY) / centerY) * maxTilt;
+          // Simula profundidade com drop-shadow dinâmico
+          const shadowX = ((mouseX - centerX) / centerX) * 32;
+          const shadowY = ((mouseY - centerY) / centerY) * 32;
+          logoExpandida.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.18)`;
+          logoExpandida.style.filter =
+            `drop-shadow(${-shadowX}px ${
+              shadowY + 16
+            }px 32px rgba(0,0,0,0.22))` +
+            ` drop-shadow(0 1px 0 #fff)` +
+            ` drop-shadow(0 0 0 #fff)`;
+        }
+      </script>
     </aside>
 
     <main id="mainContent" aria-live="polite">
@@ -686,7 +396,10 @@
           <span class="empresa-tag" tabindex="0">Hyundai</span>
         </div>
 
-        <section class="vagas-container" aria-label="Vagas Recomendadas">
+        <section
+          class="vagas-container index-vagas"
+          aria-label="Vagas Recomendadas"
+        >
           <article class="vaga-card" tabindex="0">
             <div class="vaga-empresa">Nissan</div>
             <div class="vaga-titulo">Técnico Mecânico</div>
@@ -829,29 +542,6 @@
           </div>
           <div class="favorito-item">Gestão da Qualidade e Produtividade</div>
         </section>
-
-        <button
-          id="btnVersaoEmpresa"
-          style="
-            margin: 24px auto 0 auto;
-            display: block;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 700;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 28px;
-            font-size: 1.1rem;
-            cursor: pointer;
-          "
-        >
-          Versão Empresa
-        </button>
-        <script>
-          document.getElementById("btnVersaoEmpresa").onclick = function () {
-            window.location.href = "empresa.html";
-          };
-        </script>
       </section>
 
       <!-- Página Estudo / Curso -->
@@ -1048,11 +738,11 @@
     <div
       class="chat-container"
       role="region"
-      aria-label="Chat PRISMA IA - Mude o seu futuro"
+      aria-label="Chat P.AI - Mude o seu futuro"
       style="display: flex; flex-direction: column; justify-content: flex-end"
     >
       <header class="chat-header">
-        PRISMA IA - Mude o seu futuro
+        P.AI - Mude o seu futuro
         <button
           class="chat-close-btn"
           title="Fechar chat"
@@ -1067,7 +757,7 @@
         aria-relevant="additions"
         tabindex="0"
       >
-        <div><strong>PRISMA IA:</strong> Olá, como posso ajudar você hoje?</div>
+        <div><strong>PRISMA:</strong> Olá, como posso ajudar você hoje?</div>
       </section>
       <div
         class="chat-footer"

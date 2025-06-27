@@ -15,8 +15,45 @@
         tabindex="0"
         role="button"
         aria-pressed="true"
+        style="
+          margin: 0 auto 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#e5e7eb'"
+        onmouseout="this.style.background='none'"
       >
-        🏢
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+          "
+          aria-label="Início"
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 11.5L12 4L21 11.5V20A1 1 0 0 1 20 21H16A1 1 0 0 1 15 20V16A1 1 0 0 0 14 15H10A1 1 0 0 0 9 16V20A1 1 0 0 1 8 21H4A1 1 0 0 1 3 20V11.5Z"
+              fill="#111827"
+            />
+          </svg>
+        </span>
       </div>
       <div
         id="btnCadastroEmpresa"
@@ -24,22 +61,212 @@
         tabindex="0"
         role="button"
         aria-pressed="false"
+        style="
+          margin: 0 auto 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: none;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#e5e7eb'"
+        onmouseout="this.style.background='none'"
       >
-        📝
+        <span
+          style="
+            font-size: 1.7rem;
+            color: #111827;
+            font-weight: 700;
+            letter-spacing: 1px;
+          "
+          >✎</span
+        >
       </div>
+
+      <div style="flex: 1"></div>
       <div
-        id="btnVoltarUsuario"
-        title="Versão Usuário"
+        id="btnVoltarParaUsuario"
+        title="Voltar para Versão Usuário"
         tabindex="0"
         role="button"
         aria-pressed="false"
+        style="
+          margin: 0 auto 16px auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #22c55e;
+          border: none;
+          cursor: pointer;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          transition: background 0.2s;
+        "
+        onmouseover="this.style.background='#111827';this.querySelector('circle').setAttribute('fill','#fff');this.querySelector('path').setAttribute('stroke','#fff');"
+        onmouseout="this.style.background='#22c55e';this.querySelector('circle').setAttribute('fill','#111827');this.querySelector('path').setAttribute('stroke','#111827');"
+        onclick="window.location.href='index.html'"
       >
-        👤
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+          "
+          aria-label="Voltar para Versão Usuário"
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="12" cy="8" r="4" fill="#111827" />
+            <path
+              d="M4 20c0-3.3137 3.134-6 7-6s7 2.6863 7 6"
+              stroke="#111827"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+          </svg>
+        </span>
       </div>
+      <div class="logo-lateral">
+        <img
+          src="prisma-ai/capturar-removebg-preview.png"
+          alt="Logo Prisma"
+          style="
+            width: 48px;
+            height: 80px;
+            margin-bottom: 12px;
+            opacity: 0.92;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.7, 0.2, 0.3, 1.1);
+          "
+          id="logoPrisma"
+        />
+      </div>
+      <!-- Modal para exibir a logo expandida -->
+      <div
+        id="logoModal"
+        style="
+          display: none;
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          justify-content: center;
+          align-items: center;
+          background: transparent;
+          pointer-events: auto;
+        "
+      >
+        <div
+          id="logo3dWrapper"
+          style="
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            perspective: 1200px;
+            width: 60vw;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+          "
+        >
+          <img
+            src="prisma-ai/capturar-removebg-preview.png"
+            alt="Logo Prisma Expandida"
+            id="logoExpandida"
+            style="
+              max-width: 100%;
+              max-height: 100%;
+              opacity: 0.98;
+              display: block;
+              pointer-events: none;
+              filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18))
+                drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff);
+              /* O drop-shadow cria a ilusão de profundidade apenas nas partes visíveis */
+              will-change: transform, filter;
+              transition: transform 0.18s cubic-bezier(0.7, 0.2, 0.3, 1.1),
+                filter 0.18s;
+              background: none;
+              border-radius: 0;
+            "
+          />
+        </div>
+      </div>
+      <script>
+        // Modal da logo expandida
+        const logoPrisma = document.getElementById("logoPrisma");
+        const logoModal = document.getElementById("logoModal");
+        const logoExpandida = document.getElementById("logoExpandida");
+        const logo3dWrapper = document.getElementById("logo3dWrapper");
+        logoPrisma.onclick = function () {
+          logoModal.style.display = "flex";
+        };
+        logoModal.onclick = function (e) {
+          if (e.target === logoModal) logoModal.style.display = "none";
+        };
+
+        // Faz a imagem seguir completamente o mouse na tela do modal
+        logoModal.addEventListener("mousemove", function (e) {
+          const modalRect = logoModal.getBoundingClientRect();
+          const x = e.clientX - modalRect.left;
+          const y = e.clientY - modalRect.top;
+          // Centraliza a imagem no ponteiro
+          logo3dWrapper.style.left = x + "px";
+          logo3dWrapper.style.top = y + "px";
+          // O efeito de rotação será aplicado abaixo
+          apply3DRotation(x, y, modalRect.width, modalRect.height);
+        });
+        logoModal.addEventListener("mouseleave", function () {
+          // Volta para o centro da tela e reseta rotação
+          logo3dWrapper.style.left = "50%";
+          logo3dWrapper.style.top = "50%";
+          logoExpandida.style.transform = "none";
+          logoExpandida.style.filter =
+            "drop-shadow(0 8px 24px rgba(0,0,0,0.18)) drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff)";
+        });
+
+        // Função para aplicar rotação 3D e profundidade conforme o mouse
+        function apply3DRotation(mouseX, mouseY, areaWidth, areaHeight) {
+          const centerX = areaWidth / 2;
+          const centerY = areaHeight / 2;
+          const maxTilt = 120;
+          const rotateY = ((mouseX - centerX) / centerX) * maxTilt;
+          const rotateX = -((mouseY - centerY) / centerY) * maxTilt;
+          // Simula profundidade com drop-shadow dinâmico
+          const shadowX = ((mouseX - centerX) / centerX) * 32;
+          const shadowY = ((mouseY - centerY) / centerY) * 32;
+          logoExpandida.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.18)`;
+          logoExpandida.style.filter =
+            `drop-shadow(${-shadowX}px ${
+              shadowY + 16
+            }px 32px rgba(0,0,0,0.22))` +
+            ` drop-shadow(0 1px 0 #fff)` +
+            ` drop-shadow(0 0 0 #fff)`;
+        }
+      </script>
     </aside>
     <main id="mainContentEmpresa" aria-live="polite">
-      <section id="paginaEmpresa" style="display: block">
-        <section class="empresa-container" style="margin-bottom: 32px">
+      <section id="paginaEmpresa">
+        <section class="empresa-container">
           <h2 class="metas-titulo">Informações da Empresa</h2>
           <div class="meta-item"><strong>CNPJ:</strong> 04.853.037/0001-21</div>
           <div class="meta-item">
@@ -54,23 +281,53 @@
           </div>
         </section>
 
-        <h2 class="metas-titulo">Vagas Disponíveis</h2>
-        <section class="vagas-container" aria-label="Vagas da Empresa">
-          <article
-            class="vaga-card vaga-card-add"
-            id="btnAddVaga"
-            tabindex="0"
+        <section
+          class="vagas-sumario-container metas-container"
+          style="margin-bottom: 32px"
+        >
+          <h2 class="metas-titulo">Sumário de Vagas</h2>
+          <div
+            class="vagas-sumario-grid"
             style="
               display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 2.5rem;
-              color: #2563eb;
-              cursor: pointer;
-              background: #e0e7ff;
-              border: 2px dashed #2563eb;
+              gap: 24px;
+              flex-wrap: wrap;
+              justify-content: flex-start;
             "
           >
+            <div class="vaga-sumario-card">
+              <div class="vaga-sumario-titulo">Analista de Processos</div>
+              <div class="vaga-sumario-info">
+                Interessados: <span class="vaga-sumario-num">87</span>
+              </div>
+            </div>
+            <div class="vaga-sumario-card">
+              <div class="vaga-sumario-titulo">Engenheiro de Produção</div>
+              <div class="vaga-sumario-info">
+                Interessados: <span class="vaga-sumario-num">112</span>
+              </div>
+            </div>
+            <div class="vaga-sumario-card">
+              <div class="vaga-sumario-titulo">Técnico em Qualidade</div>
+              <div class="vaga-sumario-info">
+                Interessados: <span class="vaga-sumario-num">65</span>
+              </div>
+            </div>
+            <div class="vaga-sumario-card">
+              <div class="vaga-sumario-titulo">Supervisor de Logística</div>
+              <div class="vaga-sumario-info">
+                Interessados: <span class="vaga-sumario-num">41</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <h2 class="metas-titulo">Vagas Disponíveis</h2>
+        <section
+          class="vagas-container empresa-vagas"
+          aria-label="Vagas da Empresa"
+        >
+          <article class="vaga-card vaga-card-add" id="btnAddVaga" tabindex="0">
             +
           </article>
           <article class="vaga-card" tabindex="0">
@@ -93,19 +350,98 @@
           </article>
         </section>
 
-        <section class="metas-container" style="margin-bottom: 32px">
-          <h2 class="metas-titulo">Vagas Preenchidas</h2>
-          <div class="meta-item">Engenheiro de Produção - 2024</div>
-          <div class="meta-item">Analista de Processos - 2023</div>
-        </section>
-
-        <section class="metas-container" style="margin-bottom: 32px">
-          <h2 class="metas-titulo">Média anual de vagas</h2>
-          <div style="height: 120px">
-            <canvas id="graficoVagas" width="320" height="120"></canvas>
+        <section
+          class="metas-container metas-dupla"
+          style="
+            display: flex;
+            flex-direction: row;
+            gap: 0;
+            align-items: stretch;
+            min-height: 260px;
+          "
+        >
+          <div
+            class="grafico-vagas-area"
+            style="
+              flex: 1;
+              min-width: 220px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              padding: 32px 32px 32px 24px;
+            "
+          >
+            <h2
+              class="metas-titulo"
+              style="
+                text-align: center;
+                font-size: 1.18rem;
+                margin-bottom: 18px;
+              "
+            >
+              Média anual de vagas
+            </h2>
+            <div
+              style="
+                height: 220px;
+                width: 100%;
+                max-width: 420px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <canvas id="graficoVagas" width="420" height="220"></canvas>
+            </div>
+            <div
+              style="
+                font-size: 1.12rem;
+                color: #2563eb;
+                margin-top: 4px;
+                text-align: center;
+              "
+            >
+              Média: 320 vagas/mês
+            </div>
           </div>
-          <div style="font-size: 1rem; color: #2563eb">
-            Média: 1280 vagas/mês
+          <div
+            class="vagas-preenchidas-col"
+            style="
+              flex: 1;
+              min-width: 220px;
+              border-left: 2px solid #e5e7eb;
+              padding-left: 24px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            "
+          >
+            <h2
+              class="metas-titulo"
+              style="
+                text-align: center;
+                font-size: 1.18rem;
+                margin-bottom: 18px;
+              "
+            >
+              Vagas Preenchidas
+            </h2>
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+              "
+            >
+              <div class="meta-item">Engenheiro de Produção - 2024</div>
+              <div class="meta-item">Analista de Processos - 2023</div>
+              <div class="meta-item">Técnico em Qualidade - 2023</div>
+              <div class="meta-item">Supervisor de Logística - 2022</div>
+              <div class="meta-item">Operador de Máquinas - 2022</div>
+              <div class="meta-item">Auxiliar Administrativo - 2021</div>
+            </div>
           </div>
         </section>
 
