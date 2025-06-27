@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRISMA IA - Mude o seu futuro</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+      body {
+        margin: 0;
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #f3f4f6 60%, #e0f7ef 100%);
+        color: #1f2937;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+      aside {
+        width: 80px;
+        background: white;
+        box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 16px 0;
+      }
+      aside > div {
+        font-size: 32px;
+        margin: 20px 0;
+        cursor: pointer;
+        user-select: none;
+        transition: color 0.3s;
+      }
+      aside > div:hover,
+      aside > div.active {
+        color: #2563eb;
+      }
+      main {
+        margin-left: 60px;
+        padding: 32px 0 32px 32px;
+        flex: 1;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #paginaInicio {
+        width: 100%;
+        display: block;
+        /* Centraliza o conteúdo e limita largura */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .user-meta,
+      .search-container,
+      .empresa-tags {
+        max-width: 900px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* Espaçamento entre os elementos acima dos blocos principais */
+      .user-meta {
+        margin-bottom: 24px;
+      }
+      .search-container {
+        margin-bottom: 28px;
+      }
+      .empresa-tags {
+        margin-bottom: 28px;
+      }
+
+      /* Blocos principais (sections) alinhados e espaçados */
+      .vagas-container,
+      .metas-container,
+      .favoritos-container {
+        max-width: 900px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+      }
+
+      .vagas-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .metas-container {
+        gap: 24px;
+        margin-bottom: 32px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgb(34 197 94 / 0.09),
+          0 1.5px 4px rgb(0 0 0 / 0.07);
+        border: 1px solid #e5e7eb;
+      }
+
+      .favoritos-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 28px 32px;
+        box-shadow: 0 3px 6px rgb(0 0 0 / 0.1);
+        min-height: 140px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 0; /* Último bloco não precisa de margin-bottom */
+      }
+
+      /* Responsividade */
+      @media (max-width: 900px) {
+        .vagas-container {
+          grid-template-columns: 1fr 1fr;
+        }
+        .user-meta,
+        .search-container,
+        .empresa-tags,
+        .vagas-container,
+        .metas-container,
+        .favoritos-container {
+          max-width: 99vw;
+        }
+      }
+      @media (max-width: 650px) {
+        main {
+          padding: 16px 0 70px 0;
+        }
+        #paginaInicio {
+          padding: 0 4px;
+        }
+        .vagas-container {
+          grid-template-columns: 1fr !important;
+          gap: 16px;
+        }
+        .metas-container,
+        .favoritos-container {
+          padding: 16px 8px;
+        }
+      }
+      /* Cabeçalho */
+      .user-meta {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #111827;
+        max-width: 100%;
+      }
+      .user-meta .meta-highlight {
+        background: #2563eb;
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: 700;
+        margin-left: 12px;
+        white-space: nowrap;
+      }
+      /* Busca com áudio */
+      .search-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 12px;
+        max-width: 100%;
+      }
+      .search-container input[type="text"] {
+        flex: 1;
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+      }
+      .icon-button {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: #2563eb;
+        transition: background 0.2s, transform 0.15s;
+        user-select: none;
+      }
+      .icon-button:active {
+        transform: scale(0.96);
+      }
+      .icon-button:hover {
+        background: #e0e7ff;
+      }
+      /* Empresas tags */
+      .empresa-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding: 16px 0;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgb(0 0 0 / 0.1);
+        max-width: 100%;
+      }
+      .empresa-tag {
+        background: #bfdbfe;
+        color: #1e40af;
+        padding: 8px 18px;
+        border-radius: 9999px;
+        font-size: 0.95rem;
+        user-select: none;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+        box-shadow: 0 1px 3px rgb(34 197 94 / 0.07);
+      }
+      .empresa-tag:hover,
+      .empresa-tag:focus {
+        background: #93c5fd;
+        box-shadow: 0 2px 8px rgb(34 197 94 / 0.15);
+      }
+      /* Vagas cards */
+      .vagas-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 100%;
+      }
+      @media (min-width: 640px) {
+        .vagas-container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .vaga-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px 24px;
+        box-shadow: 0 3px 16px rgb(0 0 0 / 0.12);
+        cursor: default;
+        transition: box-shadow 0.2s, transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        border: 1px solid #e5e7eb;
+      }
+      .vaga-card:hover,
+      .vaga-card:focus {
+        box-shadow: 0 6px 18px rgb(34 197 94 / 0.13),
+          0 1.5px 4px rgb(0 0 0 / 0.07);
+        transform: translateY(-4px) scale(1.025);
+        border-color: #22c55e;
+        background: #f0fdf4;
+      }
+      .vaga-empresa {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #2563eb;
+      }
+      .vaga-titulo {
+        font-weight: 800;
+        font-size: 1.3rem;
+      }
+      .vaga-curso {
+        font-size: 0.9rem;
+        color: #6b7280;
+        font-style: italic;
+      }
+      .chances {
+        margin-top: auto;
+        font-weight: 700;
+        color: #059669; /* verde */
+        font-size: 1.1rem;
+      }
+      /* Metas e cursos ampliados */
+      .metas-container,
+      .favoritos-container {
+        background: white;
+        border-radius: 20px;
+        padding: 32px;
+        box-shadow: 0 6px 18px rgb(34 197 94 / 0.09),
+          0 1.5px 4px rgb(0 0 0 / 0.07);
+        max-width: 100%;
+        width: 100%;
+        max-width: 850px;
+        margin: 0 0 32;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        border: 1px solid #e5e7eb;
+      }
+      .metas-titulo,
+      .favoritos-titulo {
+        font-weight: 800;
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+        color: #111827;
+        font-size: 1.35rem;
+        color: #065f46;
+        letter-spacing: 0.5px;
+        text-shadow: 0 1px 0 #d1fae5;
+      }
+      .meta-item {
+        font-size: 1.1rem;
+        color: #374151;
+        padding-left: 4px;
+        border-left: 4px solid #2563eb;
+      }
+      .meta-destaque {
+        font-weight: 700;
+        color: #2563eb;
+        margin-left: 6px;
+      }
+      .favorito-item {
+        padding: 14px 20px;
+        background: #eff6ff;
+        border-radius: 16px;
+        font-size: 1.1rem;
+        cursor: default;
+        transition: background-color 0.3s;
+      }
+      .favorito-item:hover {
+        background: #dbeafe;
+      }
+      /* Chat maior e fixo no canto inferior direito */
+      .chat-container {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        width: 420px;
+        height: 540px;
+        background: white;
+        box-shadow: 0 12px 40px rgb(0 0 0 / 0.22);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font-size: 0.9rem;
+        z-index: 1000;
+      }
+      .chat-header {
+        background: #2563eb;
+        color: white;
+        padding: 16px 24px;
+        font-weight: 800;
+        font-size: 1.15rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .chat-close-btn {
+        cursor: pointer;
+        font-size: 26px;
+        user-select: none;
+        font-weight: 700;
+        color: white;
+        background: transparent;
+        border: none;
+        padding: 0;
+        line-height: 1;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 18px 24px;
+        overflow-y: auto;
+        background: #e0e7ff;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* mais espaçamento entre mensagens */
+      }
+      .chat-input-area {
+        display: flex;
+        align-items: center;
+        padding: 14px 20px;
+        border-top: 1px solid #d1d5db;
+        gap: 12px;
+        background: white;
+      }
+      .chat-input-area input[type="text"] {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 16px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+      }
+      .chat-input-area button {
+        background: #2563eb;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+      }
+      .chat-input-area button:hover {
+        background: #1d4ed8;
+      }
+      /* Scroll */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f3f4f6;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #a5b4fc;
+        border-radius: 24px;
+      }
+      /* Modal lista vagas (lupa) */
+      .modal-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+      }
+      .modal-bg.active {
+        display: flex;
+      }
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+        width: 92%;
+        max-width: 720px;
+        padding: 32px 28px;
+        box-shadow: 0 12px 40px rgb(0 0 0 / 0.25);
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 22px;
+      }
+      .modal-header h3 {
+        margin: 0;
+        font-weight: 800;
+        color: #2563eb;
+        font-size: 1.7rem;
+      }
+      .modal-close {
+        cursor: pointer;
+        font-size: 32px;
+        user-select: none;
+        font-weight: 700;
+        color: #2563eb;
+        background: transparent;
+        border: none;
+        padding: 0;
+        line-height: 1;
+      }
+      .vaga-lista-item {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 16px 0;
+      }
+      .vaga-lista-item:last-child {
+        border-bottom: none;
+      }
+      .vaga-lista-empresa {
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: #2563eb;
+      }
+      .vaga-lista-titulo {
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .vaga-lista-curso {
+        font-style: italic;
+        color: #6b7280;
+        margin-bottom: 8px;
+      }
+      .vaga-lista-chances {
+        font-weight: 700;
+        color: #059669;
+      }
+      /* Formulários pré-preenchidos */
+      form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+      form input,
+      form select {
+        width: 100%;
+        padding: 14px 16px;
+        margin-bottom: 24px;
+        border-radius: 16px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+      form button {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 16px 24px;
+        border-radius: 16px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1rem;
+        transition: background-color 0.3s;
+        user-select: none;
+      }
+      form button:hover {
+        background: #1d4ed8;
+      }
+      /* Ajustar altura form perfil sem scroll */
+      #paginaPerfil form {
+        max-height: 480px;
+        overflow-y: hidden;
+      }
+      /* Botão voltar estilo igual chat */
+      .btn-voltar {
+        position: fixed;
+        top: 16px;
+        left: 96px; /* depois da sidebar */
+        background: #2563eb;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+        user-select: none;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+        z-index: 1500;
+      }
+      .btn-voltar:hover {
+        background: #1d4ed8;
+      }
+      /* Mostrar botão voltar só nas telas de formulário */
+      main.form-active + .btn-voltar {
+        display: flex;
+      }
+      /* Botão para abrir o chat IA */
+      .btn-chat-reabrir {
+        position: fixed;
+        bottom: 16px;
+        right: 16px;
+        background: #2563eb;
+        border: none;
+        border-radius: 50%;
+        width: 42px;
+        height: 42px;
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+        user-select: none;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+        z-index: 1500;
+        animation: chatBtnFadeIn 0.4s;
+      }
+      .btn-chat-reabrir:hover {
+        background: #1d4ed8;
+      }
+      @keyframes chatBtnFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.7);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside aria-label="Menu lateral">
+      <!-- removi lupa grande -->
+      <div
+        id="btnInicio"
+        title="Início"
+        class="active"
+        tabindex="0"
+        role="button"
+        aria-pressed="true"
+      >
+        🏠
+      </div>
+      <div
+        id="btnEstudo"
+        title="Estudo"
+        tabindex="0"
+        role="button"
+        aria-pressed="false"
+      >
+        🎓
+      </div>
+      <div
+        id="btnPerfil"
+        title="Perfil"
+        tabindex="0"
+        role="button"
+        aria-pressed="false"
+      >
+        🧍
+      </div>
+    </aside>
+
+    <main id="mainContent" aria-live="polite">
+      <!-- Página Início -->
+      <section
+        id="paginaInicio"
+        aria-label="Página inicial"
+        style="display: block"
+      >
+        <div class="user-meta" aria-label="Informações do usuário">
+          <span>Guilherme, Engenheiro mecânico</span>
+          <span class="meta-highlight">Meta: Modificação de Carros</span>
+        </div>
+        <div class="search-container">
+          <input
+            type="text"
+            id="inputBusca"
+            placeholder="Buscar vagas ou conversar com a PRISMA IA..."
+            aria-label="Busca de vagas ou chat"
+          />
+          <div
+            class="icon-button"
+            id="abrirModalVagas"
+            title="Mostrar todas vagas"
+            role="button"
+            tabindex="0"
+            aria-label="Mostrar todas as vagas"
+          >
+            🔍
+          </div>
+          <div
+            class="icon-button"
+            title="Microfone"
+            role="button"
+            aria-label="Microfone"
+          >
+            🎤
+          </div>
+          <div
+            class="icon-button"
+            title="Áudio"
+            role="button"
+            aria-label="Áudio"
+          >
+            🔊
+          </div>
+        </div>
+        <div class="empresa-tags" aria-label="Empresas">
+          <span class="empresa-tag" tabindex="0">Nissan</span>
+          <span class="empresa-tag" tabindex="0">Peugeot</span>
+          <span class="empresa-tag" tabindex="0">Toyota</span>
+          <span class="empresa-tag" tabindex="0">ArcelorMittal</span>
+          <span class="empresa-tag" tabindex="0">Michelin</span>
+          <span class="empresa-tag" tabindex="0">CSN</span>
+          <span class="empresa-tag" tabindex="0">Volkswagen</span>
+          <span class="empresa-tag" tabindex="0">Ford</span>
+          <span class="empresa-tag" tabindex="0">Hyundai</span>
+        </div>
+
+        <section class="vagas-container" aria-label="Vagas Recomendadas">
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Nissan</div>
+            <div class="vaga-titulo">Técnico Mecânico</div>
+            <div class="vaga-curso">Curso necessário: Técnico em Mecânica</div>
+            <div class="chances">Chances: 40%</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Toyota</div>
+            <div class="vaga-titulo">Engenheiro de Produção</div>
+            <div class="vaga-curso">
+              Curso necessário: Engenharia de Produção
+            </div>
+            <div class="chances">Chances: 90%</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">CSN</div>
+            <div class="vaga-titulo">Assistente Administrativo</div>
+            <div class="vaga-curso">
+              Curso necessário: Ensino Médio Completo
+            </div>
+            <div class="chances">Chances: 85%</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Volkswagen</div>
+            <div class="vaga-titulo">Analista de Sustentabilidade</div>
+            <div class="vaga-curso">Curso necessário: Engenharia Ambiental</div>
+            <div class="chances">Chances: 75%</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Ford</div>
+            <div class="vaga-titulo">Especialista em Qualidade</div>
+            <div class="vaga-curso">
+              Curso necessário: Engenharia de Qualidade
+            </div>
+            <div class="chances">Chances: 60%</div>
+          </article>
+        </section>
+
+        <section class="metas-container" aria-label="Metas profissionais">
+          <h2 class="metas-titulo">Metas profissionais para você</h2>
+          <div class="meta-item">
+            🧪 Fazer curso de sustentabilidade ambiental
+            <span class="meta-destaque">(Volkswagen)</span>
+          </div>
+          <div class="meta-item">
+            🔧 Aperfeiçoar conhecimentos em mecânica automotiva
+          </div>
+          <div class="meta-item">
+            🎯 Alcançar vaga em engenharia de produção
+          </div>
+        </section>
+
+        <section class="favoritos-container" aria-label="Cursos recomendados">
+          <h2 class="favoritos-titulo">Cursos recomendados para você</h2>
+          <div class="favorito-item">Curso Técnico em Mecânica Industrial</div>
+          <div class="favorito-item">Inglês Técnico para Engenharia</div>
+          <div class="favorito-item">
+            Sustentabilidade Ambiental nas Indústrias
+          </div>
+          <div class="favorito-item">Gestão da Qualidade e Produtividade</div>
+        </section>
+      </section>
+
+      <!-- Página Estudo / Curso -->
+      <section
+        id="paginaEstudo"
+        style="display: none; max-width: 600px; margin: auto"
+      >
+        <h2>Cadastro de Graduação / Curso</h2>
+        <form id="formEstudo">
+          <label for="cursoNome">Curso Superior</label>
+          <input
+            type="text"
+            id="cursoNome"
+            name="cursoNome"
+            required
+            value="Engenharia Mecânica"
+          />
+
+          <label for="situacaoCurso">Formado ou em andamento?</label>
+          <select id="situacaoCurso" name="situacaoCurso" required>
+            <option value="em_andamento" selected>Em andamento</option>
+            <option value="formado">Formado</option>
+          </select>
+
+          <label for="dataConclusao">Data de conclusão</label>
+          <input
+            type="date"
+            id="dataConclusao"
+            name="dataConclusao"
+            value="2026-12-31"
+          />
+
+          <button type="submit">Salvar</button>
+        </form>
+      </section>
+
+      <!-- Página Perfil -->
+      <section
+        id="paginaPerfil"
+        style="display: none; max-width: 600px; margin: auto"
+      >
+        <h2>Cadastro de Usuário</h2>
+        <form id="formPerfil">
+          <label for="nomeUsuario">Nome</label>
+          <input
+            type="text"
+            id="nomeUsuario"
+            name="nomeUsuario"
+            required
+            value="Guilherme"
+          />
+
+          <label for="idadeUsuario">Idade</label>
+          <input
+            type="number"
+            id="idadeUsuario"
+            name="idadeUsuario"
+            required
+            value="28"
+          />
+
+          <label for="emailUsuario">Email</label>
+          <input
+            type="email"
+            id="emailUsuario"
+            name="emailUsuario"
+            required
+            value="guilherme@email.com"
+          />
+
+          <label for="cpfUsuario">CPF</label>
+          <input
+            type="text"
+            id="cpfUsuario"
+            name="cpfUsuario"
+            required
+            value="123.456.789-00"
+          />
+
+          <label for="senhaUsuario">Senha</label>
+          <input
+            type="password"
+            id="senhaUsuario"
+            name="senhaUsuario"
+            required
+            value="123456"
+          />
+
+          <label for="pcdUsuario">É PCD?</label>
+          <select id="pcdUsuario" name="pcdUsuario" required>
+            <option value="sim" selected>Sim</option>
+            <option value="nao">Não</option>
+          </select>
+
+          <label for="metaProfissional">Meta Profissional</label>
+          <input
+            type="text"
+            id="metaProfissional"
+            name="metaProfissional"
+            required
+            value="Modificação de Carros"
+          />
+
+          <button type="submit">Salvar</button>
+        </form>
+      </section>
+    </main>
+
+    <!-- Botão Voltar -->
+    <button
+      id="btnVoltar"
+      class="btn-voltar"
+      title="Voltar"
+      aria-label="Voltar"
+    >
+      ←
+    </button>
+
+    <!-- Modal Lista Vagas -->
+    <div
+      class="modal-bg"
+      id="modalVagas"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalVagasTitulo"
+    >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modalVagasTitulo">Todas as Vagas Disponíveis</h3>
+          <button class="modal-close" id="modalClose" aria-label="Fechar modal">
+            &times;
+          </button>
+        </div>
+        <div id="listaVagasCompleta" tabindex="0">
+          <!-- Lista dinâmica será inserida aqui -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat fixo -->
+    <div
+      class="chat-container"
+      role="region"
+      aria-label="Chat PRISMA IA - Mude o seu futuro"
+      style="display: flex; flex-direction: column; justify-content: flex-end"
+    >
+      <header class="chat-header">
+        PRISMA IA - Mude o seu futuro
+        <button
+          class="chat-close-btn"
+          title="Fechar chat"
+          aria-label="Fechar chat"
+        >
+          X
+        </button>
+      </header>
+      <section
+        class="chat-messages"
+        aria-live="polite"
+        aria-relevant="additions"
+        tabindex="0"
+      >
+        <div><strong>PRISMA IA:</strong> Olá, como posso ajudar você hoje?</div>
+      </section>
+      <div
+        class="chat-footer"
+        style="
+          display: flex;
+          align-items: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+          background: #fff;
+        "
+      >
+        <button
+          id="btnAudio"
+          title="Ouvir mensagem"
+          aria-label="Ouvir mensagem"
+          style="
+            margin-right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          <!-- Mesmo ícone de áudio usado nos outros botões -->
+          <svg
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#065f46"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            viewBox="0 0 24 24"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+        </button>
+        <button
+          id="btnMic"
+          title="Falar mensagem"
+          aria-label="Falar mensagem"
+          style="
+            margin-right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          <!-- Mesmo ícone de microfone usado nos outros botões -->
+          <svg
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#065f46"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="9" y="2" width="6" height="12" rx="3" />
+            <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+            <line x1="12" y1="22" x2="12" y2="18" />
+          </svg>
+        </button>
+        <form
+          class="chat-input-area"
+          onsubmit="event.preventDefault(); sendMessage();"
+        >
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Digite sua mensagem"
+            aria-label="Digite sua mensagem para PRISMA IA"
+            autocomplete="off"
+            required
+          />
+          <button
+            type="submit"
+            title="Enviar mensagem"
+            aria-label="Enviar mensagem"
+          >
+            ➤
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Botão para abrir o chat IA -->
+    <button
+      id="btnAbrirChatIA"
+      class="btn-chat-reabrir"
+      title="Abrir chat IA"
+      aria-label="Abrir chat IA"
+      style="display: none; width: 60px; height: 60px; font-size: 40px"
+    >
+      💬
+    </button>
+
+    <script>
+      // Controle de páginas simuladas
+      const btnInicio = document.getElementById("btnInicio");
+      const btnEstudo = document.getElementById("btnEstudo");
+      const btnPerfil = document.getElementById("btnPerfil");
+      const mainContent = document.getElementById("mainContent");
+      const paginaInicio = document.getElementById("paginaInicio");
+      const paginaEstudo = document.getElementById("paginaEstudo");
+      const paginaPerfil = document.getElementById("paginaPerfil");
+      const btnVoltar = document.getElementById("btnVoltar");
+
+      // Lista de vagas (expandida para 12 vagas)
+      const vagas = [
+        {
+          empresa: "Nissan",
+          titulo: "Técnico Mecânico",
+          curso: "Técnico em Mecânica",
+          chances: 40,
+        },
+        {
+          empresa: "Toyota",
+          titulo: "Engenheiro de Produção",
+          curso: "Engenharia de Produção",
+          chances: 90,
+        },
+        {
+          empresa: "CSN",
+          titulo: "Assistente Administrativo",
+          curso: "Ensino Médio Completo",
+          chances: 85,
+        },
+        {
+          empresa: "Volkswagen",
+          titulo: "Analista de Sustentabilidade",
+          curso: "Engenharia Ambiental",
+          chances: 75,
+        },
+        {
+          empresa: "Ford",
+          titulo: "Especialista em Qualidade",
+          curso: "Engenharia de Qualidade",
+          chances: 60,
+        },
+        {
+          empresa: "Hyundai",
+          titulo: "Técnico em Manutenção",
+          curso: "Técnico em Mecânica",
+          chances: 55,
+        },
+        {
+          empresa: "Peugeot",
+          titulo: "Designer Industrial",
+          curso: "Design",
+          chances: 45,
+        },
+        {
+          empresa: "ArcelorMittal",
+          titulo: "Engenheiro de Materiais",
+          curso: "Engenharia de Materiais",
+          chances: 70,
+        },
+        {
+          empresa: "Michelin",
+          titulo: "Analista de Processos",
+          curso: "Administração",
+          chances: 65,
+        },
+        {
+          empresa: "Honda",
+          titulo: "Técnico em Qualidade",
+          curso: "Técnico em Qualidade",
+          chances: 50,
+        },
+        {
+          empresa: "Volvo",
+          titulo: "Engenheiro de Segurança",
+          curso: "Engenharia de Segurança do Trabalho",
+          chances: 80,
+        },
+        {
+          empresa: "Renault",
+          titulo: "Analista de Logística",
+          curso: "Logística",
+          chances: 60,
+        },
+      ];
+
+      // Função para mudar página
+      function mostrarPagina(pagina) {
+        paginaInicio.style.display = "none";
+        paginaEstudo.style.display = "none";
+        paginaPerfil.style.display = "none";
+
+        btnInicio.classList.remove("active");
+        btnEstudo.classList.remove("active");
+        btnPerfil.classList.remove("active");
+
+        if (pagina === "inicio") {
+          paginaInicio.style.display = "block";
+          btnInicio.classList.add("active");
+          mainContent.classList.remove("form-active");
+          btnVoltar.style.display = "none";
+        } else if (pagina === "estudo") {
+          paginaEstudo.style.display = "block";
+          btnEstudo.classList.add("active");
+          mainContent.classList.add("form-active");
+          btnVoltar.style.display = "flex";
+        } else if (pagina === "perfil") {
+          paginaPerfil.style.display = "block";
+          btnPerfil.classList.add("active");
+          mainContent.classList.add("form-active");
+          btnVoltar.style.display = "flex";
+        }
+      }
+
+      // Eventos botões menu lateral
+      btnInicio.onclick = () => mostrarPagina("inicio");
+      btnEstudo.onclick = () => mostrarPagina("estudo");
+      btnPerfil.onclick = () => mostrarPagina("perfil");
+
+      // Botão voltar volta para a página início
+      btnVoltar.onclick = () => mostrarPagina("inicio");
+
+      // Modal vagas (lupa)
+      const modalVagas = document.getElementById("modalVagas");
+      const abrirModalVagas = document.getElementById("abrirModalVagas");
+      const modalClose = document.getElementById("modalClose");
+      const listaVagasCompleta = document.getElementById("listaVagasCompleta");
+
+      abrirModalVagas.onclick = () => {
+        modalVagas.classList.add("active");
+        preencherListaVagas();
+      };
+      modalClose.onclick = () => {
+        modalVagas.classList.remove("active");
+      };
+      modalVagas.onclick = (e) => {
+        if (e.target === modalVagas) modalVagas.classList.remove("active");
+      };
+
+      function preencherListaVagas() {
+        listaVagasCompleta.innerHTML = "";
+        vagas.forEach((vaga) => {
+          const vagaDiv = document.createElement("div");
+          vagaDiv.className = "vaga-lista-item";
+          vagaDiv.tabIndex = 0;
+          vagaDiv.innerHTML = `
+        <div class="vaga-lista-empresa">${vaga.empresa}</div>
+        <div class="vaga-lista-titulo">${vaga.titulo}</div>
+        <div class="vaga-lista-curso">Curso necessário: ${vaga.curso}</div>
+        <div class="vaga-lista-chances">Chances: ${vaga.chances}%</div>
+      `;
+          listaVagasCompleta.appendChild(vagaDiv);
+        });
+      }
+
+      // Chat PRISMA IA - respostas básicas
+      const chatMessages = document.querySelector(".chat-messages");
+      const chatInput = document.getElementById("chatInput");
+      const chatContainer = document.querySelector(".chat-container");
+      const btnAbrirChatIA = document.getElementById("btnAbrirChatIA");
+      const chatCloseBtn = document.querySelector(".chat-close-btn");
+
+      chatCloseBtn.onclick = () => {
+        chatContainer.style.display = "none";
+        btnAbrirChatIA.style.display = "flex";
+      };
+
+      btnAbrirChatIA.onclick = () => {
+        chatContainer.style.display = "flex";
+        btnAbrirChatIA.style.display = "none";
+      };
+
+      // Garante que o chat aparece ao carregar e o botão está escondido
+      window.addEventListener("DOMContentLoaded", () => {
+        chatContainer.style.display = "flex";
+        btnAbrirChatIA.style.display = "none";
+      });
+
+      function sendMessage() {
+        const userMsg = chatInput.value.trim();
+        if (!userMsg) return;
+
+        const userDiv = document.createElement("div");
+        userDiv.textContent = `Você: ${userMsg}`;
+        chatMessages.appendChild(userDiv);
+
+        chatInput.value = "";
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        setTimeout(() => {
+          const resposta = gerarResposta(userMsg.toLowerCase());
+          const iaDiv = document.createElement("div");
+          iaDiv.innerHTML = `<strong>PRISMA IA:</strong> ${resposta}`;
+          chatMessages.appendChild(iaDiv);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 700);
+      }
+
+      function gerarResposta(msg) {
+        if (msg.includes("oi") || msg.includes("olá")) {
+          return "Olá! Posso ajudar com vagas, cursos, ou montar seu currículo. O que deseja?";
+        }
+        if (msg.includes("vaga")) {
+          return "Quer saber sobre vagas disponíveis? Clique no ícone de lupa para ver todas.";
+        }
+        if (msg.includes("curso")) {
+          return "Posso recomendar cursos que aumentem suas chances nas vagas.";
+        }
+        if (msg.includes("currículo") || msg.includes("curriculo")) {
+          return "Envie seu currículo na aba 'Perfil' para que eu possa ajudar a melhorá-lo.";
+        }
+        if (msg.includes("pcd")) {
+          return "Temos vagas inclusivas específicas para PCD, garantindo acessibilidade e oportunidades justas.";
+        }
+        return "Desculpe, não entendi. Pode reformular sua pergunta?";
+      }
+
+      // Formulários - salvar só previne comportamento padrão e dá feedback simples
+      document.getElementById("formPerfil").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Perfil salvo com sucesso!");
+        mostrarPagina("inicio");
+      });
+      document.getElementById("formEstudo").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Informações do curso salvas com sucesso!");
+        mostrarPagina("inicio");
+      });
+
+      // Iniciar com página início
+      mostrarPagina("inicio");
+    </script>
+  </body>
+</html>
