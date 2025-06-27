@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PRISMA IA - Versão Empresa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside aria-label="Menu lateral">
+      <div
+        id="btnInicioEmpresa"
+        class="active"
+        title="Início"
+        tabindex="0"
+        role="button"
+        aria-pressed="true"
+      >
+        🏢
+      </div>
+      <div
+        id="btnCadastroEmpresa"
+        title="Cadastro da Empresa"
+        tabindex="0"
+        role="button"
+        aria-pressed="false"
+      >
+        📝
+      </div>
+      <div
+        id="btnVoltarUsuario"
+        title="Versão Usuário"
+        tabindex="0"
+        role="button"
+        aria-pressed="false"
+      >
+        👤
+      </div>
+    </aside>
+    <main id="mainContentEmpresa" aria-live="polite">
+      <section id="paginaEmpresa" style="display: block">
+        <section class="empresa-container" style="margin-bottom: 32px">
+          <h2 class="metas-titulo">Informações da Empresa</h2>
+          <div class="meta-item"><strong>CNPJ:</strong> 04.853.037/0001-21</div>
+          <div class="meta-item">
+            <strong>Nome:</strong> Michelin Brasil Pneus Ltda.
+          </div>
+          <div class="meta-item">
+            <strong>Endereço:</strong> Rodovia BR-040, Km 69, s/nº - Xerém,
+            Duque de Caxias/RJ, CEP 25260-010
+          </div>
+          <div class="meta-item">
+            <strong>Funcionários:</strong> Aproximadamente 6.000
+          </div>
+        </section>
+
+        <h2 class="metas-titulo">Vagas Disponíveis</h2>
+        <section class="vagas-container" aria-label="Vagas da Empresa">
+          <article
+            class="vaga-card vaga-card-add"
+            id="btnAddVaga"
+            tabindex="0"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 2.5rem;
+              color: #2563eb;
+              cursor: pointer;
+              background: #e0e7ff;
+              border: 2px dashed #2563eb;
+            "
+          >
+            +
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Michelin</div>
+            <div class="vaga-titulo">Analista de Processos</div>
+            <div class="vaga-curso">Administração</div>
+            <div class="chances">Status: Aberta</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Michelin</div>
+            <div class="vaga-titulo">Engenheiro de Produção</div>
+            <div class="vaga-curso">Engenharia de Produção</div>
+            <div class="chances">Status: Preenchida</div>
+          </article>
+          <article class="vaga-card" tabindex="0">
+            <div class="vaga-empresa">Michelin</div>
+            <div class="vaga-titulo">Técnico em Qualidade</div>
+            <div class="vaga-curso">Técnico em Qualidade</div>
+            <div class="chances">Status: Aberta</div>
+          </article>
+        </section>
+
+        <section class="metas-container" style="margin-bottom: 32px">
+          <h2 class="metas-titulo">Vagas Preenchidas</h2>
+          <div class="meta-item">Engenheiro de Produção - 2024</div>
+          <div class="meta-item">Analista de Processos - 2023</div>
+        </section>
+
+        <section class="metas-container" style="margin-bottom: 32px">
+          <h2 class="metas-titulo">Média anual de vagas</h2>
+          <div style="height: 120px">
+            <canvas id="graficoVagas" width="320" height="120"></canvas>
+          </div>
+          <div style="font-size: 1rem; color: #2563eb">
+            Média: 1280 vagas/mês
+          </div>
+        </section>
+
+        <!-- Modal de cadastro de vaga -->
+        <div id="modalAddVaga" class="modal-bg">
+          <div class="modal-content" style="max-width: 420px">
+            <div class="modal-header">
+              <h3>Nova Vaga</h3>
+              <button id="modalAddVagaClose" class="modal-close">
+                &times;
+              </button>
+            </div>
+            <form id="formAddVaga">
+              <label for="vagaTitulo">Título da Vaga</label>
+              <input type="text" id="vagaTitulo" name="vagaTitulo" required />
+
+              <label for="vagaCurso">Curso Necessário</label>
+              <input type="text" id="vagaCurso" name="vagaCurso" required />
+
+              <label for="vagaStatus">Status</label>
+              <select id="vagaStatus" name="vagaStatus" required>
+                <option value="Aberta">Aberta</option>
+                <option value="Preenchida">Preenchida</option>
+              </select>
+
+              <label for="vagaPCD">Vaga para PCD?</label>
+              <select id="vagaPCD" name="vagaPCD" required>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+              </select>
+
+              <button type="submit">Cadastrar Vaga</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="cadastroEmpresa"
+        style="
+          display: none;
+          max-width: 600px;
+          margin: 40px auto;
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 4px 16px #0001;
+          padding: 32px;
+        "
+      >
+        <h2 class="metas-titulo">Cadastro da Empresa</h2>
+        <form id="formCadastroEmpresa">
+          <label for="cnpjEmpresa">CNPJ</label>
+          <input
+            type="text"
+            id="cnpjEmpresa"
+            name="cnpjEmpresa"
+            required
+            placeholder="00.000.000/0001-00"
+          />
+
+          <label for="nomeEmpresa">Nome da Empresa</label>
+          <input
+            type="text"
+            id="nomeEmpresa"
+            name="nomeEmpresa"
+            required
+            placeholder="Nome da empresa"
+          />
+
+          <label for="enderecoEmpresa">Endereço</label>
+          <input
+            type="text"
+            id="enderecoEmpresa"
+            name="enderecoEmpresa"
+            required
+            placeholder="Endereço completo"
+          />
+
+          <label for="emailEmpresa">E-mail</label>
+          <input
+            type="email"
+            id="emailEmpresa"
+            name="emailEmpresa"
+            required
+            placeholder="contato@empresa.com"
+          />
+
+          <label for="telefoneEmpresa">Telefone</label>
+          <input
+            type="tel"
+            id="telefoneEmpresa"
+            name="telefoneEmpresa"
+            required
+            placeholder="(00) 0000-0000"
+          />
+
+          <button type="submit">Cadastrar Empresa</button>
+        </form>
+      </section>
+    </main>
+    <script>
+      document.getElementById("btnVoltarUsuario").onclick = function () {
+        window.location.href = "index.html";
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Gráfico de linha para média anual de vagas
+      window.addEventListener("DOMContentLoaded", function () {
+        var ctx = document.getElementById("graficoVagas").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago"],
+            datasets: [
+              {
+                label: "Vagas",
+                data: [210, 230, 250, 270, 300, 340, 370, 390],
+                borderColor: "#2563eb",
+                backgroundColor: "rgba(37,99,235,0.08)",
+                tension: 0.3,
+                fill: true,
+                pointRadius: 3,
+                pointBackgroundColor: "#22c55e",
+              },
+            ],
+          },
+          options: {
+            plugins: { legend: { display: false } },
+            scales: {
+              y: { beginAtZero: true, ticks: { color: "#2563eb" } },
+              x: { ticks: { color: "#2563eb" } },
+            },
+          },
+        });
+      });
+    </script>
+    <script>
+      document
+        .getElementById("formCadastroEmpresa")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Empresa cadastrada com sucesso!");
+          // Aqui você pode adicionar lógica para salvar ou exibir os dados da empresa
+          e.target.reset();
+        });
+    </script>
+    <script>
+      // Modal de cadastro de vaga
+      const btnAddVaga = document.getElementById("btnAddVaga");
+      const modalAddVaga = document.getElementById("modalAddVaga");
+      const modalAddVagaClose = document.getElementById("modalAddVagaClose");
+      const formAddVaga = document.getElementById("formAddVaga");
+      btnAddVaga.onclick = () => {
+        modalAddVaga.classList.add("active");
+      };
+      modalAddVagaClose.onclick = () => {
+        modalAddVaga.classList.remove("active");
+      };
+      modalAddVaga.onclick = (e) => {
+        if (e.target === modalAddVaga) modalAddVaga.classList.remove("active");
+      };
+      formAddVaga.onsubmit = function (e) {
+        e.preventDefault();
+        // Adiciona a vaga na lista
+        const titulo = document.getElementById("vagaTitulo").value;
+        const curso = document.getElementById("vagaCurso").value;
+        const status = document.getElementById("vagaStatus").value;
+        const pcd = document.getElementById("vagaPCD").value;
+        const vagasContainer = document.querySelector(".vagas-container");
+        const card = document.createElement("article");
+        card.className = "vaga-card";
+        card.tabIndex = 0;
+        card.innerHTML = `<div class="vaga-empresa">Michelin</div><div class="vaga-titulo">${titulo}</div><div class="vaga-curso">${curso}</div><div class="chances">Status: ${status}</div><div class="vaga-pcd" style="color:${
+          pcd === "Sim" ? "#22c55e" : "#ef4444"
+        };font-weight:700;">PCD: ${pcd}</div>`;
+        vagasContainer.insertBefore(card, btnAddVaga);
+        modalAddVaga.classList.remove("active");
+        formAddVaga.reset();
+      };
+    </script>
+    <script>
+      // Navegação entre as seções
+      const btnInicioEmpresa = document.getElementById("btnInicioEmpresa");
+      const btnCadastroEmpresa = document.getElementById("btnCadastroEmpresa");
+      const paginaEmpresa = document.getElementById("paginaEmpresa");
+      const cadastroEmpresa = document.getElementById("cadastroEmpresa");
+
+      btnInicioEmpresa.onclick = () => {
+        paginaEmpresa.style.display = "block";
+        cadastroEmpresa.style.display = "none";
+        btnInicioEmpresa.classList.add("active");
+        btnCadastroEmpresa.classList.remove("active");
+      };
+
+      btnCadastroEmpresa.onclick = () => {
+        paginaEmpresa.style.display = "none";
+        cadastroEmpresa.style.display = "block";
+        btnCadastroEmpresa.classList.add("active");
+        btnInicioEmpresa.classList.remove("active");
+      };
+    </script>
+  </body>
+</html>

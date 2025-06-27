@@ -72,6 +72,9 @@
       }
       .empresa-tags {
         margin-bottom: 28px;
+        justify-content: center;
+        width: 100%;
+        max-width: 100%;
       }
 
       /* Blocos principais (sections) alinhados e espaçados */
@@ -671,6 +674,7 @@
           </div>
         </div>
         <div class="empresa-tags" aria-label="Empresas">
+          <br /><br />
           <span class="empresa-tag" tabindex="0">Nissan</span>
           <span class="empresa-tag" tabindex="0">Peugeot</span>
           <span class="empresa-tag" tabindex="0">Toyota</span>
@@ -721,17 +725,98 @@
           </article>
         </section>
 
-        <section class="metas-container" aria-label="Metas profissionais">
-          <h2 class="metas-titulo">Metas profissionais para você</h2>
-          <div class="meta-item">
-            🧪 Fazer curso de sustentabilidade ambiental
-            <span class="meta-destaque">(Volkswagen)</span>
+        <section
+          class="metas-container"
+          aria-label="Metas profissionais"
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+          "
+        >
+          <div style="flex: 2; min-width: 0">
+            <h2 class="metas-titulo">Metas profissionais para você</h2>
+            <ul style="list-style: none; padding: 0; margin: 0">
+              <li class="meta-item">
+                🧪 Fazer curso de sustentabilidade ambiental
+                <span class="meta-destaque">(Volkswagen)</span>
+              </li>
+              <li class="meta-item">
+                🔧 Aperfeiçoar conhecimentos em mecânica automotiva
+              </li>
+              <li class="meta-item">
+                🎯 Alcançar vaga em engenharia de produção
+              </li>
+            </ul>
           </div>
-          <div class="meta-item">
-            🔧 Aperfeiçoar conhecimentos em mecânica automotiva
+          <div
+            style="
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            "
+          >
+            <!-- Gráfico meia lua estilizado -->
+            <svg width="120" height="70" viewBox="0 0 120 70">
+              <!-- Fundo -->
+              <path
+                d="M20,60 A40,40 0 0,1 100,60"
+                fill="none"
+                stroke="#e5e7eb"
+                stroke-width="14"
+              />
+              <!-- Progresso (75%) -->
+              <path
+                d="M20,60 A40,40 0 0,1 100,60"
+                fill="none"
+                stroke="#22c55e"
+                stroke-width="14"
+                stroke-linecap="round"
+                stroke-dasharray="94"
+                stroke-dashoffset="23"
+              />
+            </svg>
+            <div
+              style="
+                color: #22c55e;
+                font-size: 1.5rem;
+                font-weight: 800;
+                margin-top: -18px;
+              "
+            >
+              75%
+            </div>
+            <div
+              style="
+                font-size: 0.98rem;
+                color: #374151;
+                margin-top: 2px;
+                text-align: center;
+              "
+            >
+              Progresso das suas metas
+            </div>
           </div>
+        </section>
+
+        <section
+          class="metas-container"
+          aria-label="Experiências Profissionais"
+        >
+          <h2 class="metas-titulo">Experiências Profissionais</h2>
           <div class="meta-item">
-            🎯 Alcançar vaga em engenharia de produção
+            <span style="font-weight: 700; color: #2563eb"
+              >Assistente Administrativo</span
+            >
+            (2021-01 - 2022-12)<span
+              class="meta-destaque"
+              style="margin-left: 8px"
+              >Atendimento ao público, organização de documentos e apoio à
+              equipe.</span
+            >
           </div>
         </section>
 
@@ -744,6 +829,29 @@
           </div>
           <div class="favorito-item">Gestão da Qualidade e Produtividade</div>
         </section>
+
+        <button
+          id="btnVersaoEmpresa"
+          style="
+            margin: 24px auto 0 auto;
+            display: block;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            cursor: pointer;
+          "
+        >
+          Versão Empresa
+        </button>
+        <script>
+          document.getElementById("btnVersaoEmpresa").onclick = function () {
+            window.location.href = "empresa.html";
+          };
+        </script>
       </section>
 
       <!-- Página Estudo / Curso -->
@@ -778,6 +886,59 @@
 
           <button type="submit">Salvar</button>
         </form>
+
+        <!-- Nova seção: Experiência de Trabalho -->
+        <h2>Experiência de Trabalho</h2>
+        <form id="formExperiencia">
+          <label for="cargoExp">Função/Cargo</label>
+          <input
+            type="text"
+            id="cargoExp"
+            name="cargoExp"
+            required
+            value="Assistente Administrativo"
+          />
+
+          <label for="descricaoExp">O que fazia</label>
+          <input
+            type="text"
+            id="descricaoExp"
+            name="descricaoExp"
+            required
+            value="Atendimento ao público, organização de documentos e apoio à equipe."
+          />
+
+          <label for="entradaExp">Entrada</label>
+          <input
+            type="month"
+            id="entradaExp"
+            name="entradaExp"
+            required
+            value="2021-01"
+          />
+
+          <label for="saidaExp">Saída</label>
+          <input type="month" id="saidaExp" name="saidaExp" value="2022-12" />
+
+          <button type="submit">Salvar Experiência</button>
+        </form>
+        <div id="listaExperiencias" style="margin-top: 18px">
+          <div
+            style="
+              background: #f0fdf4;
+              border-radius: 6px;
+              padding: 10px 14px;
+              margin-bottom: 10px;
+            "
+          >
+            <strong style="color: #065f46">Assistente Administrativo</strong>
+            (2021-01 - 2022-12)<br />
+            <span style="color: #065f46"
+              >Atendimento ao público, organização de documentos e apoio à
+              equipe.</span
+            >
+          </div>
+        </div>
       </section>
 
       <!-- Página Perfil -->
@@ -1234,6 +1395,22 @@
         alert("Informações do curso salvas com sucesso!");
         mostrarPagina("inicio");
       });
+      document.getElementById("formExperiencia").onsubmit = function (e) {
+        e.preventDefault();
+        const cargo = document.getElementById("cargoExp").value;
+        const desc = document.getElementById("descricaoExp").value;
+        const entrada = document.getElementById("entradaExp").value;
+        const saida = document.getElementById("saidaExp").value;
+        const lista = document.getElementById("listaExperiencias");
+        const item = document.createElement("div");
+        item.style =
+          "background:#f0fdf4;border-radius:6px;padding:10px 14px;margin-bottom:10px;";
+        item.innerHTML = `<strong style="color:#065f46;">${cargo}</strong> (${entrada} - ${
+          saida || "Atual"
+        })<br><span style="color:#065f46;">${desc}</span>`;
+        lista.appendChild(item);
+        e.target.reset();
+      };
 
       // Iniciar com página início
       mostrarPagina("inicio");
