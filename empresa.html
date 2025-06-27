@@ -141,133 +141,52 @@
           </svg>
         </span>
       </div>
-      <div class="logo-lateral">
-        <img
-          src="./capturar-removebg-preview.png"
-          alt="Logo Prisma"
-          style="
-            width: 48px;
-            height: 80px;
-            margin-bottom: 12px;
-            opacity: 0.92;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.7, 0.2, 0.3, 1.1);
-          "
-          id="logoPrisma"
-        />
-      </div>
       <!-- Modal para exibir a logo expandida -->
-      <div
-        id="logoModal"
-        style="
-          display: none;
-          position: fixed;
-          z-index: 9999;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          justify-content: center;
-          align-items: center;
-          background: transparent;
-          pointer-events: auto;
-        "
-      >
-        <div
-          id="logo3dWrapper"
-          style="
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            perspective: 1200px;
-            width: 60vw;
-            height: 60vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-          "
-        >
-          <img
-            src="./capturar-removebg-preview.png"
-            alt="Logo Prisma Expandida"
-            id="logoExpandida"
-            style="
-              max-width: 100%;
-              max-height: 100%;
-              opacity: 0.98;
-              display: block;
-              pointer-events: none;
-              filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.18))
-                drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff);
-              /* O drop-shadow cria a ilusão de profundidade apenas nas partes visíveis */
-              will-change: transform, filter;
-              transition: transform 0.18s cubic-bezier(0.7, 0.2, 0.3, 1.1),
-                filter 0.18s;
-              background: none;
-              border-radius: 0;
-            "
-          />
-        </div>
-      </div>
-      <script>
-        // Modal da logo expandida
-        const logoPrisma = document.getElementById("logoPrisma");
-        const logoModal = document.getElementById("logoModal");
-        const logoExpandida = document.getElementById("logoExpandida");
-        const logo3dWrapper = document.getElementById("logo3dWrapper");
-        logoPrisma.onclick = function () {
-          logoModal.style.display = "flex";
-        };
-        logoModal.onclick = function (e) {
-          if (e.target === logoModal) logoModal.style.display = "none";
-        };
-
-        // Faz a imagem seguir completamente o mouse na tela do modal
-        logoModal.addEventListener("mousemove", function (e) {
-          const modalRect = logoModal.getBoundingClientRect();
-          const x = e.clientX - modalRect.left;
-          const y = e.clientY - modalRect.top;
-          // Centraliza a imagem no ponteiro
-          logo3dWrapper.style.left = x + "px";
-          logo3dWrapper.style.top = y + "px";
-          // O efeito de rotação será aplicado abaixo
-          apply3DRotation(x, y, modalRect.width, modalRect.height);
-        });
-        logoModal.addEventListener("mouseleave", function () {
-          // Volta para o centro da tela e reseta rotação
-          logo3dWrapper.style.left = "50%";
-          logo3dWrapper.style.top = "50%";
-          logoExpandida.style.transform = "none";
-          logoExpandida.style.filter =
-            "drop-shadow(0 8px 24px rgba(0,0,0,0.18)) drop-shadow(0 1px 0 #fff) drop-shadow(0 0 0 #fff)";
-        });
-
-        // Função para aplicar rotação 3D e profundidade conforme o mouse
-        function apply3DRotation(mouseX, mouseY, areaWidth, areaHeight) {
-          const centerX = areaWidth / 2;
-          const centerY = areaHeight / 2;
-          const maxTilt = 120;
-          const rotateY = ((mouseX - centerX) / centerX) * maxTilt;
-          const rotateX = -((mouseY - centerY) / centerY) * maxTilt;
-          // Simula profundidade com drop-shadow dinâmico
-          const shadowX = ((mouseX - centerX) / centerX) * 32;
-          const shadowY = ((mouseY - centerY) / centerY) * 32;
-          logoExpandida.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.18)`;
-          logoExpandida.style.filter =
-            `drop-shadow(${-shadowX}px ${
-              shadowY + 16
-            }px 32px rgba(0,0,0,0.22))` +
-            ` drop-shadow(0 1px 0 #fff)` +
-            ` drop-shadow(0 0 0 #fff)`;
-        }
-      </script>
     </aside>
     <main id="mainContentEmpresa" aria-live="polite">
       <section id="paginaEmpresa">
         <section class="empresa-container">
-          <h2 class="metas-titulo">Informações da Empresa</h2>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 18px;
+              position: relative;
+              z-index: 1;
+            "
+          >
+            <h2 class="metas-titulo" style="margin: 0">
+              Informações da Empresa
+            </h2>
+            <div
+              class="logo-lateral"
+              style="
+                margin-left: 24px;
+                position: absolute;
+                right: 0;
+                top: -30px;
+                z-index: 0;
+                pointer-events: auto;
+              "
+            >
+              <img
+                src="https://i.postimg.cc/fRcHdm69/capturar-removebg-preview.png"
+                alt="Logo Prisma"
+                style="
+                  width: 190px;
+                  height: 190px;
+                  opacity: 1;
+                  cursor: pointer;
+                  transition: transform 0.32s cubic-bezier(0.7, 0.2, 0.3, 1.1);
+                  display: block;
+                "
+                id="logoPrisma"
+                onmouseover="this.style.transform='scale(1.25) rotate(-90deg)'"
+                onmouseout="this.style.transform='scale(1) rotate(0deg)'"
+              />
+            </div>
+          </div>
           <div class="meta-item"><strong>CNPJ:</strong> 04.853.037/0001-21</div>
           <div class="meta-item">
             <strong>Nome:</strong> Michelin Brasil Pneus Ltda.

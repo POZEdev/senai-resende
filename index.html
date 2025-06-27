@@ -214,21 +214,7 @@
           </svg>
         </span>
       </div>
-      <div class="logo-lateral">
-        <img
-          src="./capturar-removebg-preview.png"
-          alt="Logo Prisma"
-          style="
-            width: 48px;
-            height: 80px;
-            margin-bottom: 12px;
-            opacity: 0.92;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.7, 0.2, 0.3, 1.1);
-          "
-          id="logoPrisma"
-        />
-      </div>
+      <div class="logo-lateral"></div>
       <!-- Modal para exibir a logo expandida -->
       <div
         id="logoModal"
@@ -345,46 +331,161 @@
         aria-label="Página inicial"
         style="display: block"
       >
-        <div class="user-meta" aria-label="Informações do usuário">
-          <span>Guilherme, Engenheiro mecânico</span>
-          <span class="meta-highlight">Meta: Modificação de Carros</span>
-        </div>
-        <div class="search-container">
-          <input
-            type="text"
-            id="inputBusca"
-            placeholder="Buscar vagas ou conversar com a PRISMA IA..."
-            aria-label="Busca de vagas ou chat"
+        <div
+          class="user-meta"
+          aria-label="Informações do usuário"
+          style="
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 0;
+            padding-left: 32px; /* alinhamento igual ao das empresas */
+            box-sizing: border-box;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              flex: 1;
+              min-width: 0;
+              margin-top: 8px;
+            "
+          >
+            <div style="display: flex; align-items: center">
+              <span>Guilherme, Engenheiro mecânico</span>
+              <span class="meta-highlight">Meta: Modificação de Carros</span>
+            </div>
+            <div
+              class="search-container"
+              style="
+                margin-top: 0;
+                margin-bottom: 0;
+                display: flex;
+                align-items: left;
+                gap: 30px;
+              "
+            >
+              <input
+                type="text"
+                id="inputBusca"
+                placeholder="Buscar vagas ou conversar com a PRISMA IA..."
+                aria-label="Busca de vagas ou chat"
+                style="
+                  min-width: 0;
+                  height: 44px;
+                  font-size: 1.08rem;
+                  border-radius: 8px;
+                  border: 1px solid #d1d5db;
+                  padding: 0 14px;
+                  margin-top: 18px;
+                  margin-left: 0;
+                  margin-right: 0;
+                  align-self: flex-start;
+                "
+              />
+              <div
+                class="icon-button"
+                id="abrirModalVagas"
+                title="Mostrar todas vagas"
+                role="button"
+                tabindex="0"
+                aria-label="Mostrar todas as vagas"
+                style="
+                  height: 44px;
+                  width: 44px;
+                  font-size: 1.3rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 8px;
+                  background: #f0fdf4;
+                  border: 1px solid #22c55e;
+                  margin-left: 2px;
+                "
+              >
+                🔍
+              </div>
+              <div
+                class="icon-button"
+                title="Microfone"
+                role="button"
+                aria-label="Microfone"
+                style="
+                  height: 44px;
+                  width: 44px;
+                  font-size: 1.3rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 8px;
+                  background: #f0fdf4;
+                  border: 1px solid #22c55e;
+                "
+              >
+                🎤
+              </div>
+              <div
+                class="icon-button"
+                title="Áudio"
+                role="button"
+                aria-label="Áudio"
+                style="
+                  height: 44px;
+                  width: 44px;
+                  font-size: 1.3rem;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  border-radius: 8px;
+                  background: #f0fdf4;
+                  border: 1px solid #22c55e;
+                "
+              >
+                🔊
+              </div>
+            </div>
+          </div>
+          <img
+            src="https://i.postimg.cc/fRcHdm69/capturar-removebg-preview.png"
+            alt="Logo Prisma"
+            style="
+              width: 190px;
+              height: 190px;
+              opacity: 1;
+              cursor: pointer;
+              transition: transform 0.32s cubic-bezier(0.7, 0.2, 0.3, 1.1);
+              display: block;
+              margin-left: 8px;
+              margin-right: 0;
+              margin-top: -18px;
+              margin-bottom: 0;
+            "
+            id="logoPrisma"
+            onmouseover="this.style.transform='scale(1.25) rotate(-90deg)'"
+            onmouseout="this.style.transform='scale(1) rotate(0deg)'"
           />
-          <div
-            class="icon-button"
-            id="abrirModalVagas"
-            title="Mostrar todas vagas"
-            role="button"
-            tabindex="0"
-            aria-label="Mostrar todas as vagas"
-          >
-            🔍
-          </div>
-          <div
-            class="icon-button"
-            title="Microfone"
-            role="button"
-            aria-label="Microfone"
-          >
-            🎤
-          </div>
-          <div
-            class="icon-button"
-            title="Áudio"
-            role="button"
-            aria-label="Áudio"
-          >
-            🔊
-          </div>
         </div>
-        <div class="empresa-tags" aria-label="Empresas">
-          <br /><br />
+        <div
+          class="empresa-tags"
+          aria-label="Empresas"
+          style="
+            padding-left: 0;
+            margin-top: 8px;
+            max-width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            align-items: center;
+          "
+        >
+          <!-- Removido <br /><br /> para alinhar melhor -->
           <span class="empresa-tag" tabindex="0">Nissan</span>
           <span class="empresa-tag" tabindex="0">Peugeot</span>
           <span class="empresa-tag" tabindex="0">Toyota</span>
