@@ -143,7 +143,7 @@
       </div>
       <div class="logo-lateral">
         <img
-          src="prisma-ai/capturar-removebg-preview.png"
+          src="capturar-removebg-preview.png"
           alt="Logo Prisma"
           style="
             width: 48px;
@@ -190,7 +190,7 @@
           "
         >
           <img
-            src="prisma-ai/capturar-removebg-preview.png"
+            src="capturar-removebg-preview.png"
             alt="Logo Prisma Expandida"
             id="logoExpandida"
             style="
@@ -427,21 +427,222 @@
             >
               Vagas Preenchidas
             </h2>
+
+            <!-- Gráfico de barras de vagas preenchidas/disponíveis -->
             <div
+              id="graficoVagaSelecionadaContainer"
               style="
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+                margin-top: 32px;
+                max-width: 480px;
+                margin-left: auto;
+                margin-right: auto;
               "
             >
-              <div class="meta-item">Engenheiro de Produção - 2024</div>
-              <div class="meta-item">Analista de Processos - 2023</div>
-              <div class="meta-item">Técnico em Qualidade - 2023</div>
-              <div class="meta-item">Supervisor de Logística - 2022</div>
-              <div class="meta-item">Operador de Máquinas - 2022</div>
-              <div class="meta-item">Auxiliar Administrativo - 2021</div>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 8px;
+                  margin-bottom: 8px;
+                "
+              >
+                <button
+                  id="btnVagaAnterior"
+                  style="
+                    padding: 4px 8px;
+                    border-radius: 6px;
+                    border: 1px solid #22c55e;
+                    background: #fff;
+                    color: #22c55e;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                  "
+                >
+                  &#8592;
+                </button>
+                <span
+                  id="nomeVagaSelecionada"
+                  style="
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    min-width: 180px;
+                    text-align: center;
+                  "
+                  >Engenheiro de Produção</span
+                >
+                <button
+                  id="btnVagaProxima"
+                  style="
+                    padding: 4px 8px;
+                    border-radius: 6px;
+                    border: 1px solid #22c55e;
+                    background: #fff;
+                    color: #22c55e;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                  "
+                >
+                  &#8594;
+                </button>
+                <button
+                  id="btnDropdownVagas"
+                  style="
+                    padding: 4px 8px;
+                    border-radius: 6px;
+                    border: 1px solid #22c55e;
+                    background: #fff;
+                    color: #22c55e;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 1.1rem;
+                    transform: rotate(0deg);
+                    transition: transform 0.2s;
+                  "
+                >
+                  &#9650;
+                </button>
+              </div>
+              <div
+                id="listaVagasDropdown"
+                style="
+                  display: none;
+                  background: #fff;
+                  border: 1px solid #d1d5db;
+                  border-radius: 8px;
+                  max-height: 180px;
+                  overflow-y: auto;
+                  margin-bottom: 10px;
+                "
+              ></div>
+              <canvas
+                id="graficoVagaSelecionada"
+                width="420"
+                height="220"
+              ></canvas>
             </div>
+            <script>
+              const vagasDados = [
+                {
+                  nome: "Engenheiro de Produção",
+                  disponivel: 410,
+                  preenchido: 395,
+                },
+                {
+                  nome: "Analista de Processos",
+                  disponivel: 370,
+                  preenchido: 350,
+                },
+                {
+                  nome: "Técnico em Qualidade",
+                  disponivel: 335,
+                  preenchido: 320,
+                },
+                {
+                  nome: "Supervisor de Logística",
+                  disponivel: 295,
+                  preenchido: 270,
+                },
+                {
+                  nome: "Operador de Máquinas",
+                  disponivel: 280,
+                  preenchido: 260,
+                },
+                {
+                  nome: "Auxiliar Administrativo",
+                  disponivel: 260,
+                  preenchido: 240,
+                },
+                {
+                  nome: "Engenheiro Ambiental",
+                  disponivel: 210,
+                  preenchido: 185,
+                },
+                {
+                  nome: "Técnico em Segurança do Trabalho",
+                  disponivel: 175,
+                  preenchido: 150,
+                },
+                {
+                  nome: "Estagiário de Engenharia",
+                  disponivel: 160,
+                  preenchido: 140,
+                },
+                { nome: "Analista de RH", disponivel: 130, preenchido: 110 },
+              ];
+              let vagaAtual = 0;
+              let graficoVaga;
+              function renderizarGraficoVaga(idx) {
+                const vaga = vagasDados[idx];
+                document.getElementById("nomeVagaSelecionada").textContent =
+                  vaga.nome;
+                const canvas = document.getElementById(
+                  "graficoVagaSelecionada"
+                );
+                if (!canvas) return;
+                const ctx = canvas.getContext("2d");
+                if (graficoVaga) graficoVaga.destroy();
+                graficoVaga = new Chart(ctx, {
+                  type: "bar",
+                  data: {
+                    labels: ["Disponível", "Preenchido"],
+                    datasets: [
+                      {
+                        label: vaga.nome,
+                        data: [vaga.disponivel, vaga.preenchido],
+                        backgroundColor: ["#2563eb", "#fb923c"],
+                        borderRadius: 8,
+                        maxBarThickness: 48,
+                      },
+                    ],
+                  },
+                  options: {
+                    plugins: { legend: { display: false } },
+                    scales: {
+                      y: { beginAtZero: true, ticks: { color: "#111827" } },
+                      x: { ticks: { color: "#111827" } },
+                    },
+                  },
+                });
+              }
+              renderizarGraficoVaga(vagaAtual);
+              // Dropdown de vagas
+              const btnTrocarVaga = document.getElementById("btnTrocarVaga");
+              const listaVagasDropdown =
+                document.getElementById("listaVagasDropdown");
+              btnTrocarVaga.onclick = function () {
+                listaVagasDropdown.style.display =
+                  listaVagasDropdown.style.display === "block"
+                    ? "none"
+                    : "block";
+                if (listaVagasDropdown.innerHTML === "") {
+                  vagasDados.forEach((vaga, idx) => {
+                    const opt = document.createElement("div");
+                    opt.textContent = vaga.nome;
+                    opt.style.padding = "8px 14px";
+                    opt.style.cursor = "pointer";
+                    opt.onmouseover = () => (opt.style.background = "#f0fdf4");
+                    opt.onmouseout = () => (opt.style.background = "#fff");
+                    opt.onclick = () => {
+                      vagaAtual = idx;
+                      renderizarGraficoVaga(idx);
+                      listaVagasDropdown.style.display = "none";
+                    };
+                    listaVagasDropdown.appendChild(opt);
+                  });
+                }
+              };
+              document.addEventListener("click", function (e) {
+                if (
+                  !btnTrocarVaga.contains(e.target) &&
+                  !listaVagasDropdown.contains(e.target)
+                ) {
+                  listaVagasDropdown.style.display = "none";
+                }
+              });
+            </script>
           </div>
         </section>
 
@@ -541,6 +742,166 @@
           <button type="submit">Cadastrar Empresa</button>
         </form>
       </section>
+
+      <section
+        id="cadastroCurso"
+        style="
+          display: none;
+          max-width: 600px;
+          margin: 40px auto;
+          background: #fff;
+          border-radius: 16px;
+          box-shadow: 0 4px 16px #0001;
+          padding: 32px;
+        "
+      >
+        <h2 class="metas-titulo">Cadastro de Graduação/Curso</h2>
+        <form id="formCadastroCurso">
+          <label for="nomeCurso">Nome do Curso</label>
+          <input
+            type="text"
+            id="nomeCurso"
+            name="nomeCurso"
+            required
+            placeholder="Nome do curso"
+          />
+
+          <label for="areaCurso">Área de Estudo</label>
+          <input
+            type="text"
+            id="areaCurso"
+            name="areaCurso"
+            required
+            placeholder="Área de estudo"
+          />
+
+          <label for="instituicaoCurso">Instituição de Ensino</label>
+          <input
+            type="text"
+            id="instituicaoCurso"
+            name="instituicaoCurso"
+            required
+            placeholder="Nome da instituição"
+          />
+
+          <label for="anoConclusao">Ano de Conclusão</label>
+          <input
+            type="number"
+            id="anoConclusao"
+            name="anoConclusao"
+            required
+            placeholder="AAAA"
+            min="1900"
+            max="2100"
+          />
+
+          <label
+            for="descricaoCurso"
+            style="
+              margin-top: 18px;
+              display: block;
+              font-weight: 600;
+              color: #111827;
+            "
+            >Descrição do Curso</label
+          >
+          <textarea
+            id="descricaoCurso"
+            name="descricaoCurso"
+            rows="4"
+            placeholder="Descreva brevemente o conteúdo do curso, habilidades desenvolvidas, etc."
+            style="
+              width: 100%;
+              border-radius: 8px;
+              border: 1px solid #d1d5db;
+              padding: 12px;
+              font-size: 1rem;
+              margin-bottom: 18px;
+            "
+          ></textarea>
+
+          <h2 class="metas-titulo">Experiência de Trabalho</h2>
+          <form id="formExperiencia">
+            <label for="cargoExperiencia">Cargo</label>
+            <input
+              type="text"
+              id="cargoExperiencia"
+              name="cargoExperiencia"
+              required
+              placeholder="Seu cargo na empresa"
+            />
+
+            <label for="empresaExperiencia">Empresa</label>
+            <input
+              type="text"
+              id="empresaExperiencia"
+              name="empresaExperiencia"
+              required
+              placeholder="Nome da empresa"
+            />
+
+            <label for="periodoExperiencia">Período</label>
+            <input
+              type="text"
+              id="periodoExperiencia"
+              name="periodoExperiencia"
+              required
+              placeholder="Ex: Jan 2020 - Dez 2021"
+            />
+
+            <label
+              for="atividadesExperiencia"
+              style="
+                margin-top: 18px;
+                display: block;
+                font-weight: 600;
+                color: #111827;
+              "
+              >Atividades Desenvolvidas</label
+            >
+            <textarea
+              id="atividadesExperiencia"
+              name="atividadesExperiencia"
+              rows="4"
+              placeholder="Descreva suas principais atividades e responsabilidades..."
+              style="
+                width: 100%;
+                border-radius: 8px;
+                border: 1px solid #d1d5db;
+                padding: 12px;
+                font-size: 1rem;
+                margin-bottom: 18px;
+              "
+            ></textarea>
+          </form>
+          <label
+            for="descricaoSobreMim"
+            style="
+              margin-top: 18px;
+              display: block;
+              font-weight: 600;
+              color: #111827;
+            "
+            >Sobre você</label
+          >
+          <textarea
+            id="descricaoSobreMim"
+            name="descricaoSobreMim"
+            rows="4"
+            placeholder="Conte um pouco sobre você, seus objetivos, interesses ou experiências relevantes..."
+            style="
+              width: 100%;
+              border-radius: 8px;
+              border: 1px solid #d1d5db;
+              padding: 12px;
+              font-size: 1rem;
+              margin-bottom: 18px;
+            "
+          ></textarea>
+
+          <button type="submit">Cadastrar Curso</button>
+        </form>
+      </section>
     </main>
     <script>
       document.getElementById("btnVoltarUsuario").onclick = function () {
@@ -558,19 +919,31 @@
             labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago"],
             datasets: [
               {
-                label: "Vagas",
-                data: [210, 230, 250, 270, 300, 340, 370, 390],
+                label: "Vagas Disponíveis",
+                data: [220, 260, 245, 310, 330, 350, 390, 410],
                 borderColor: "#2563eb",
                 backgroundColor: "rgba(37,99,235,0.08)",
-                tension: 0.3,
+                tension: 0.35,
                 fill: true,
                 pointRadius: 3,
                 pointBackgroundColor: "#22c55e",
               },
+              {
+                label: "Vagas Preenchidas (projeção)",
+                data: [200, 250, 230, 295, 310, 340, 370, 400],
+                borderColor: "#fb923c",
+                backgroundColor: "rgba(251,146,60,0.10)",
+                tension: 0.38,
+                fill: false,
+                pointRadius: 3,
+                pointBackgroundColor: "#fb923c",
+                borderWidth: 2,
+                borderDash: [6, 4],
+              },
             ],
           },
           options: {
-            plugins: { legend: { display: false } },
+            plugins: { legend: { display: true } },
             scales: {
               y: { beginAtZero: true, ticks: { color: "#2563eb" } },
               x: { ticks: { color: "#2563eb" } },
@@ -644,5 +1017,125 @@
         btnInicioEmpresa.classList.remove("active");
       };
     </script>
+    <script>
+      // Gráfico interativo de vagas preenchidas/disponíveis consolidado
+      (function () {
+        // Dados das vagas
+        const vagasDados = [
+          { nome: "Engenheiro de Produção", disponivel: 410, preenchido: 320 },
+          { nome: "Analista de Processos", disponivel: 370, preenchido: 270 },
+          { nome: "Técnico em Qualidade", disponivel: 335, preenchido: 235 },
+          { nome: "Supervisor de Logística", disponivel: 295, preenchido: 195 },
+          { nome: "Operador de Máquinas", disponivel: 280, preenchido: 180 },
+          { nome: "Auxiliar Administrativo", disponivel: 260, preenchido: 160 },
+          { nome: "Engenheiro Ambiental", disponivel: 210, preenchido: 110 },
+          {
+            nome: "Técnico em Segurança do Trabalho",
+            disponivel: 175,
+            preenchido: 75,
+          },
+          { nome: "Estagiário de Engenharia", disponivel: 160, preenchido: 60 },
+          { nome: "Analista de RH", disponivel: 130, preenchido: 30 },
+        ];
+        let vagaAtual = 0;
+        let graficoVaga;
+        function renderizarGraficoVaga(idx) {
+          const vaga = vagasDados[idx];
+          document.getElementById("nomeVagaSelecionada").textContent =
+            vaga.nome;
+          const canvas = document.getElementById("graficoVagaSelecionada");
+          if (!canvas) return;
+          const ctx = canvas.getContext("2d");
+          if (graficoVaga) graficoVaga.destroy();
+          graficoVaga = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: ["Disponível", "Preenchido"],
+              datasets: [
+                {
+                  label: vaga.nome,
+                  data: [vaga.disponivel, vaga.preenchido],
+                  backgroundColor: ["#2563eb", "#fb923c"],
+                  borderRadius: 8,
+                  maxBarThickness: 48,
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                legend: { display: false },
+                datalabels: {
+                  anchor: "end",
+                  align: "start",
+                  color: "#111827",
+                  font: { weight: "bold", size: 16 },
+                  formatter: Math.round,
+                },
+              },
+              scales: {
+                y: { display: false },
+                x: { ticks: { color: "#111827" } },
+              },
+            },
+            plugins: [ChartDataLabels],
+          });
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+          renderizarGraficoVaga(vagaAtual);
+          const btnDropdownVagas = document.getElementById("btnDropdownVagas");
+          const listaVagasDropdown =
+            document.getElementById("listaVagasDropdown");
+          const btnVagaAnterior = document.getElementById("btnVagaAnterior");
+          const btnVagaProxima = document.getElementById("btnVagaProxima");
+          // Dropdown
+          btnDropdownVagas.onclick = function (e) {
+            e.stopPropagation();
+            const opened = listaVagasDropdown.style.display === "block";
+            listaVagasDropdown.style.display = opened ? "none" : "block";
+            btnDropdownVagas.innerHTML = opened ? "&#9650;" : "&#9660;";
+            if (!opened && listaVagasDropdown.innerHTML === "") {
+              listaVagasDropdown.innerHTML = "";
+              vagasDados.forEach((vaga, idx) => {
+                const opt = document.createElement("div");
+                opt.textContent = vaga.nome;
+                opt.style.padding = "8px 14px";
+                opt.style.cursor = "pointer";
+                opt.onmouseover = () => (opt.style.background = "#f0fdf4");
+                opt.onmouseout = () => (opt.style.background = "#fff");
+                opt.onclick = (ev) => {
+                  ev.stopPropagation();
+                  vagaAtual = idx;
+                  renderizarGraficoVaga(idx);
+                  listaVagasDropdown.style.display = "none";
+                  btnDropdownVagas.innerHTML = "&#9650;";
+                };
+                listaVagasDropdown.appendChild(opt);
+              });
+            }
+          };
+          document.addEventListener("click", function (e) {
+            if (
+              !btnDropdownVagas.contains(e.target) &&
+              !listaVagasDropdown.contains(e.target)
+            ) {
+              listaVagasDropdown.style.display = "none";
+              btnDropdownVagas.innerHTML = "&#9650;";
+            }
+          });
+          // Avançar e voltar
+          btnVagaAnterior.onclick = function (e) {
+            e.stopPropagation();
+            vagaAtual = (vagaAtual - 1 + vagasDados.length) % vagasDados.length;
+            renderizarGraficoVaga(vagaAtual);
+          };
+          btnVagaProxima.onclick = function (e) {
+            e.stopPropagation();
+            vagaAtual = (vagaAtual + 1) % vagasDados.length;
+            renderizarGraficoVaga(vagaAtual);
+          };
+        });
+      })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
   </body>
 </html>
